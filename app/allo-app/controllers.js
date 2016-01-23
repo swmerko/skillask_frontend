@@ -1,5 +1,5 @@
 import { BaseController } from 'outlinejs/controllers';
-import { AlloView, AlloDetailView } from './views';
+import { AlloView, SearchView } from './views';
 
 export class AlloController extends BaseController {
   static get loginRequired() {
@@ -13,14 +13,21 @@ export class AlloController extends BaseController {
 
 }
 
-export class AlloDetailController extends BaseController {
+export class SearchController extends BaseController {
   static get loginRequired() {
     return false;
   }
 
-  init(detailId) {
-    this.view = AlloDetailView;
-    this.render({detail: detailId});
+  search() {
+    return [
+      {id: 1, name: 'cicciopasticcio'},
+      {id: 2, name: 'lalala'}
+    ];
+  }
+
+  init(searchString) {
+    this.view = SearchView;
+    this.render({search: searchString});
   }
 
 }

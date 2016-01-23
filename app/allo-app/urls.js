@@ -1,11 +1,11 @@
-import { AlloController, AlloDetailController } from './controllers';
+import { AlloController, SearchController } from './controllers';
 import { BaseRouter, url } from 'outlinejs/routers';
 
 export default class extends BaseRouter {
   get urlPatterns() {
     return {
       '/': url('allo:home', AlloController),
-      'other/:detailId/': url('allo:other', AlloDetailController)
+      'search/:searchString/': url('allo:search', SearchController)
     };
   }
 }
