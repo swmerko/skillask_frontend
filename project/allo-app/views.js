@@ -8,24 +8,18 @@ class MenuView extends BaseComponent {
   render() {
     return <ul className="nav nav-pills pull-right">
       <li className={RouteUtils.isState('allo:home')}><a href={RouteUtils.reverse('allo:home')}>Home</a></li>
-      <li className={RouteUtils.isState('allo:search')}><a href={RouteUtils.reverse('allo:search', {searchString: 'python'})}>Search Python</a></li>
+      <li className={RouteUtils.isState('allo:other')}><a href={RouteUtils.reverse('allo:other', {detailId: 1})}>Other Page</a></li>
     </ul>;
-  }
-}
-
-class HeaderView extends BaseComponent {
-  render() {
-    return <div className="header">
-        <MenuView />
-        <h3 className="text-muted">skillask_frontend asf</h3>
-      </div>;
   }
 }
 
 export class AlloView extends BaseView {
   render() {
     return <div className="container">
-        <HeaderView />
+      <div className="header">
+        <MenuView />
+        <h3 className="text-muted">skillask_frontend</h3>
+      </div>
 
       <div className="jumbotron">
         <h1>'Allo, 'Allo!</h1>
@@ -53,23 +47,24 @@ export class AlloView extends BaseView {
   }
 }
 
-export class SearchView extends BaseView {
+export class AlloDetailView extends BaseView {
   render() {
     return <div className="container">
-        <HeaderView />
+      <div className="header">
+        <MenuView />
+        <h3 className="text-muted">skillask_frontend</h3>
+      </div>
 
       <div className="jumbotron">
-        <div className="input-group" id="bloodhound">
-            <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
-            <input className="form-control input-lg typeahead" type="search"
-                   placeholder="Search the bloody skill you fucking want! Damnass" data-provide="typeahead"/>
-        </div>
+        <h1>'Allo, 'Allo!</h1>
+        <p className="lead">Always a pleasure scaffolding your apps.</p>
+        <p><a className="btn btn-lg btn-success" href="#">Splendid!</a></p>
       </div>
 
       <div className="row marketing">
         <div className="col-lg-6">
           <p>
-            Say 'allo to another page with a parameter id equal to <strong>{this.props.search}</strong>
+            Say 'allo to another page with a parameter id equal to <strong>{this.props.detail}</strong>
           </p>
           <img src="/static/allo-app/media/images/yeoman.png" />
         </div>
@@ -79,19 +74,5 @@ export class SearchView extends BaseView {
         <p>♥ from the Yeoman team</p>
       </div>
     </div>;
-  }
-}
-
-
-export class SearchResult extends BaseView {
-
-  constructor() {
-    super();
-  }
-
-  render() {
-    return <div className="col-md-12">
-        <h3>Risultato</h3>
-      </div>;
   }
 }
