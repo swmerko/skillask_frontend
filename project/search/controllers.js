@@ -1,5 +1,6 @@
 import { BaseLayoutController } from 'outlinejs/controllers';
-import { MyLayoutView, MyContentView } from './views';
+import { SearchContentView } from './views';
+import { BaseLayoutView } from '../core/views';
 import { UserCollection } from './managers';
 import { gettext } from 'outlinejs/utils/translation';
 
@@ -9,8 +10,8 @@ export class MyController extends BaseLayoutController {
   }
 
   init() {
-    this.layoutView = MyLayoutView;
-    this.view = MyContentView;
+    this.layoutView = BaseLayoutView;
+    this.view = SearchContentView;
     this.render({ myVar: gettext('Loading users ...') });
 
     var users = new UserCollection();

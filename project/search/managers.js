@@ -5,7 +5,12 @@ export class UserCollection extends BaseCollection {
   get url() {
     return 'http://jsonplaceholder.typicode.com/users';
   }
+
   get model() {
     return User;
   }
+
+  //parse(response) {
+  //  return response.results;
+  //}
 }
