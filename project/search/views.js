@@ -1,6 +1,7 @@
 import { BaseView } from 'outlinejs/views';
 import React from 'react';
 import { gettext } from 'outlinejs/utils/translation';
+import { Typeahead } from 'react-typeahead';
 
 //import { HeaderView } from '../core/views';
 
@@ -22,11 +23,11 @@ export class SearchView extends BaseView {
           this.props.users.map((user) => {
             return <div key={ user.id } className="col-lg-3 col-md-6 text-center">
               <div className="service-box">
-                <img src="http://lorempixel.com/100/100/"/>
+                <img src={ user.userProfileImageUrl }/>
 
-                <h3>{ user.displayName }</h3>
+                <h3>{ user.userFullName }</h3>
 
-                <p className="text-muted">Our templates are updated regularly so they don't break.</p>
+                <p className="text-muted">{ user.skillName }</p>
               </div>
             </div>;
           })
@@ -48,7 +49,8 @@ export class SearchView extends BaseView {
                 <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
                 <input className="form-control input-lg typeahead" type="search"
                        placeholder="Search the bloody skill you fucking want! Damnass" data-provide="typeahead"
-                       autoComplete="off" onChange={ this.handleChange.bind(this) } />
+                       autoComplete="off" onChange={ this.handleChange.bind(this) }/>
+
               </div>
             </div>
           </div>
@@ -79,4 +81,3 @@ export class SearchView extends BaseView {
      </div>;*/
   }
 }
-

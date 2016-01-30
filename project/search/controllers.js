@@ -32,7 +32,8 @@ export class SearchController extends BaseLayoutController {
     //console.log(this.eventbookConfiguration);
     this.searchString = searchString;
     var users = new UserCollection();
-    users.fetch().then(() => {
+    var filter = {skill_name: searchString}
+    users.fetch({data: filter}).then(() => {
       this.users = users;
       this.render(this.context);
     }).catch((err) => {

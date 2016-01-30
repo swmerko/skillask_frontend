@@ -1,16 +1,12 @@
 import { BaseCollection } from 'outlinejs/managers';
-import { User } from './models';
+import { UserSkill } from './models';
 
 export class UserCollection extends BaseCollection {
   get url() {
-    return 'http://jsonplaceholder.typicode.com/users';
+    return 'https://skillask.herokuapp.com/search/api/base_search/';
   }
 
   get model() {
-    return User;
+    return UserSkill;
   }
-
-  //parse(response) {
-  //  return response.results;
-  //}
 }
