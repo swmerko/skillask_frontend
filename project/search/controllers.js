@@ -2,7 +2,6 @@ import { BaseLayoutController } from 'outlinejs/controllers';
 import { SearchView } from './views';
 import { LayoutView } from '../core/views';
 import { UserSkillSearchResultCollection } from './managers';
-import { UserCollection } from '../prova/managers';
 import { SkillCollection } from '../skills/managers';
 
 export class SearchController extends BaseLayoutController {
@@ -43,8 +42,7 @@ export class SearchController extends BaseLayoutController {
   search(searchString) {
     this.searchString = searchString;
     var users = new UserSkillSearchResultCollection();
-    var filter = {skill_name: searchString}
-    users.fetch({data: filter}).then(() => {
+    users.fetch({data: {skillName: searchString}}).then(() => {
       this.users = users;
       this.render(this.context);
     }).catch((err) => {

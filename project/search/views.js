@@ -5,9 +5,73 @@ import { BaseComponent } from 'outlinejs/components';
 
 class InizialSearchResultsView extends BaseComponent {
   render() {
+    return <section>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12 text-center">
+            <h2 className="section-heading"> { gettext('Type something to star searching things') }</h2>
+            <hr className="primary"/>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
+          Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
+          ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+        </div>
+      </div>
+    </section>;
+  }
+}
+
+class SearchNoResultsView extends BaseComponent {
+  render() {
     return <div>
-      { gettext('Type something to star searching things') }
+      { gettext('No results') }
     </div>;
+  }
+}
+
+
+class ResultsView extends BaseView {
+  render() {
+    var results;
+    if (this.props.users.length > 0) {
+      results = <ul>
+        {
+          this.props.users.map((userSkill) => {
+            return <div key={ userSkill.id } className="col-lg-3 col-md-6 text-center">
+              <div className="service-box">
+                <img src={ userSkill.userProfileImageUrl }/>
+
+                <h3>{ userSkill.userFullName }</h3>
+
+                <p className="text-muted">{ userSkill.skillName }</p>
+              </div>
+            </div>;
+          })
+        }
+      </ul>;
+    } else {
+      results = <SearchNoResultsView />;
+    }
+
+    return <section>
+      <div className="container">
+        <div className="row">
+          <div className="col-lg-12 text-center">
+            <h2 className="section-heading">Search - { this.props.searchString } </h2>
+            <hr className="primary"/>
+          </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row">
+          { results }
+        </div>
+      </div>
+    </section>;
   }
 }
 
@@ -24,46 +88,30 @@ export class SearchView extends BaseView {
   }
 
   render() {
-    var users;
     var suggestions;
+    var resultsView;
 
     if (this.props.skillsSuggestions.length > 0) {
       suggestions = <div>
         <h4>{ gettext('Suggestions:') }</h4>
-        <ul>
+        <div>
           {
             this.props.skillsSuggestions.map((skill) => {
               return <span key={ skill.id }>{ skill.name }, </span>;
             })
           }
-        </ul>
+        </div>
       </div>;
+
     }
 
-    if (this.props.users.length > 0) {
-      users = <ul>
-        {
-          this.props.users.map((user) => {
-            return <div key={ user.id } className="col-lg-3 col-md-6 text-center">
-              <div className="service-box">
-                <img src={ user.userProfileImageUrl }/>
-
-                <h3>{ user.userFullName }</h3>
-
-                <p className="text-muted">{ user.skillName }</p>
-              </div>
-            </div>;
-          })
-        }
-      </ul>;
+    if (this.props.searchString.length > 0) {
+      resultsView = <ResultsView searchString={ this.props.searchString } users={ this.props.users }
+                                 skillsSuggestions={ this.props.skillsSuggestions } controller={ this.controller }/>;
     } else {
-      if (this.props.searchString === '') {
-        users = <InizialSearchResultsView />;
-
-      } else {
-        users = <h3>{ gettext('No results') }</h3>;
-      }
+      resultsView = <InizialSearchResultsView />;
     }
+
 
     return <div>
 
@@ -71,12 +119,12 @@ export class SearchView extends BaseView {
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-lg-offset-2 text-center">
-              <h2 className="section-heading">We've got what you need!</h2>
+              <h2 className="section-heading">We've got the skills you need!</h2>
               <hr className="light"/>
               <div className="input-group" id="bloodhound">
                 <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
                 <input className="form-control input-lg typeahead" type="search"
-                       placeholder="Search the bloody skill you fucking want! Damnass" data-provide="typeahead"
+                       placeholder="Search the skill you want!" data-provide="typeahead"
                        autoComplete="off" onChange={ this.handleChange.bind(this) }
                        onKeyUp={ this.suggestionChange.bind(this) }/>
 
@@ -87,27 +135,8 @@ export class SearchView extends BaseView {
         </div>
       </section>
 
-      <section>
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <h2 className="section-heading">Search - { this.props.searchString } </h2>
-              <hr className="primary"/>
-            </div>
-          </div>
-        </div>
-        <div className="container">
-          <div className="row">
-            { users }
-          </div>
-        </div>
-      </section>
+      { resultsView }
 
     </div>;
-
-    /*    <div>
-     <p>{ this.props.myVar }</p>
-     { users }
-     </div>;*/
   }
 }

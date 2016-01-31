@@ -59,16 +59,16 @@ export class NavView extends BaseView {
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul className="nav navbar-nav navbar-right">
             <li>
-              <a className="page-scroll" href="#about">About</a>
+              <a className="page-scroll" href="#about">{ gettext('About:') }</a>
             </li>
             <li>
-              <a className="page-scroll" href="#services">Services</a>
+              <a className="page-scroll" href="#services">{ gettext('Services:') }</a>
             </li>
             <li>
-              <a className="page-scroll" href="#portfolio">Portfolio</a>
+              <a className="page-scroll" href="#portfolio">{ gettext('Portfolio:') }</a>
             </li>
             <li>
-              <a className="page-scroll" href="#contact">Contact</a>
+              <a className="page-scroll" href="#contact">{ gettext('Contacts:') }</a>
             </li>
           </ul>
         </div>
