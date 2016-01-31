@@ -1,21 +1,44 @@
 import { BaseView } from 'outlinejs/views';
 import React from 'react';
 import { gettext } from 'outlinejs/utils/translation';
-import { Typeahead } from 'react-typeahead';
+import { BaseComponent } from 'outlinejs/components';
 
-//import { HeaderView } from '../core/views';
-
+class InizialSearchResultsView extends BaseComponent {
+  render() {
+    return <div>
+      { gettext('Type something to star searching things') }
+    </div>;
+  }
+}
 
 export class SearchView extends BaseView {
 
   handleChange(event) {
     var searchString = event.target.value;
-    //console.log(searchString);
     this.controller.search(searchString);
+  }
+
+  suggestionChange(event) {
+    var suggestionString = event.target.value;
+    this.controller.getSuggestions(suggestionString);
   }
 
   render() {
     var users;
+    var suggestions;
+
+    if (this.props.skillsSuggestions.length > 0) {
+      suggestions = <div>
+        <h4>{ gettext('Suggestions:') }</h4>
+        <ul>
+          {
+            this.props.skillsSuggestions.map((skill) => {
+              return <span key={ skill.id }>{ skill.name }, </span>;
+            })
+          }
+        </ul>
+      </div>;
+    }
 
     if (this.props.users.length > 0) {
       users = <ul>
@@ -34,7 +57,12 @@ export class SearchView extends BaseView {
         }
       </ul>;
     } else {
-      users = <h3> No results </h3>;
+      if (this.props.searchString === '') {
+        users = <InizialSearchResultsView />;
+
+      } else {
+        users = <h3>{ gettext('No results') }</h3>;
+      }
     }
 
     return <div>
@@ -49,9 +77,11 @@ export class SearchView extends BaseView {
                 <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
                 <input className="form-control input-lg typeahead" type="search"
                        placeholder="Search the bloody skill you fucking want! Damnass" data-provide="typeahead"
-                       autoComplete="off" onChange={ this.handleChange.bind(this) }/>
+                       autoComplete="off" onChange={ this.handleChange.bind(this) }
+                       onKeyUp={ this.suggestionChange.bind(this) }/>
 
               </div>
+              { suggestions }
             </div>
           </div>
         </div>
@@ -61,7 +91,7 @@ export class SearchView extends BaseView {
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">
-              <h2 className="section-heading">At Your Service - { this.props.searchString } </h2>
+              <h2 className="section-heading">Search - { this.props.searchString } </h2>
               <hr className="primary"/>
             </div>
           </div>

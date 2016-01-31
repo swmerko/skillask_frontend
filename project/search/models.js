@@ -1,6 +1,6 @@
 import { BaseModel } from 'outlinejs/models';
 
-export class UserSkill extends BaseModel {
+export class UserSkillSearchResult extends BaseModel {
   get id() {
     return this.get('id');
   }
