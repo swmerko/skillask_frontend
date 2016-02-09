@@ -1,12 +1,16 @@
 import { BaseCollection } from 'outlinejs/managers';
-import { UserSkillSearchResult } from './models';
+import { UserSkill } from './models';
 
-export class UserSkillSearchResultCollection extends BaseCollection {
+export class UserSkillCollection extends BaseCollection {
   get url() {
-    return 'https://skillask.herokuapp.com/search/api/base_search/';
+    return 'https://skillask.herokuapp.com/skills/api/user_skills/';
   }
 
   get model() {
-    return UserSkillSearchResult;
+    return UserSkill;
+  }
+
+  parse(response) {
+    return response.results;
   }
 }

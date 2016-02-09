@@ -2,6 +2,7 @@ import { BaseView } from 'outlinejs/views';
 import React from 'react';
 import { gettext } from 'outlinejs/utils/translation';
 import { BaseComponent } from 'outlinejs/components';
+import { SearchInputView } from './components';
 
 class InizialSearchResultsView extends BaseComponent {
   render() {
@@ -41,6 +42,7 @@ class ResultsView extends BaseView {
       results = <ul>
         {
           this.props.users.map((userSkill) => {
+            console.log(userSkill);
             return <div key={ userSkill.id } className="col-lg-3 col-md-6 text-center">
               <div className="service-box">
                 <img src={ userSkill.userProfileImageUrl }/>
@@ -88,26 +90,12 @@ export class SearchView extends BaseView {
   }
 
   render() {
-    var suggestions;
     var resultsView;
 
-    if (this.props.skillsSuggestions.length > 0) {
-      suggestions = <div>
-        <h4>{ gettext('Suggestions:') }</h4>
-        <div>
-          {
-            this.props.skillsSuggestions.map((skill) => {
-              return <span key={ skill.id }>{ skill.name }, </span>;
-            })
-          }
-        </div>
-      </div>;
-
-    }
-
     if (this.props.searchString.length > 0) {
-      resultsView = <ResultsView searchString={ this.props.searchString } users={ this.props.users }
-                                 skillsSuggestions={ this.props.skillsSuggestions } controller={ this.controller }/>;
+      resultsView = <ResultsView searchString={ this.props.searchString }
+                                 users={ this.props.users }
+                                 controller={ this.controller }/>;
     } else {
       resultsView = <InizialSearchResultsView />;
     }
@@ -121,15 +109,22 @@ export class SearchView extends BaseView {
             <div className="col-lg-8 col-lg-offset-2 text-center">
               <h2 className="section-heading">We've got the skills you need!</h2>
               <hr className="light"/>
-              <div className="input-group" id="bloodhound">
-                <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
-                <input className="form-control input-lg typeahead" type="search"
-                       placeholder="Search the skill you want!" data-provide="typeahead"
-                       autoComplete="off" onChange={ this.handleChange.bind(this) }
-                       onKeyUp={ this.suggestionChange.bind(this) }/>
+              {/*
+               <div className="input-group" id="bloodhound">
+               <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
+               <input className="form-control input-lg typeahead" type="search"
+               placeholder="Search the skill you want!" data-provide="typeahead"
+               autoComplete="off" onChange={ this.handleChange.bind(this) }
+               onKeyUp={ this.suggestionChange.bind(this) }/>
 
-              </div>
-              { suggestions }
+               </div>
+
+               { suggestions }
+               */}
+
+
+              <SearchInputView controller={ this.controller }/>
+
             </div>
           </div>
         </div>
