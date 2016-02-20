@@ -27,17 +27,6 @@ export class SearchInputView extends BaseView {
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
-  getSuggestions(searchString) {
-    var skillsSuggestions = new SkillCollection();
-    skillsSuggestions.fetch({data: {search: searchString}}).then(() => {
-      this.skillsSuggestions = skillsSuggestions;
-      this.render(this.context);
-    }).catch((err) => {
-      console.log(err);
-    });
-    this.render(this.context);
-  }
-
   loadSuggestions(value) {
     const cacheKey = value.trim().toLowerCase();
 
@@ -90,8 +79,7 @@ export class SearchInputView extends BaseView {
   }
 
   onSuggestionSelected(event, { suggestion }) {
-    console.log(event);
-    this.props.controller.search(suggestion);
+    this.props.handleSelect(suggestion);
   }
 
   render() {

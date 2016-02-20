@@ -1,5 +1,6 @@
 import { BaseView } from 'outlinejs/views';
 import React from 'react';
+import { RouteUtils } from 'outlinejs/routers';
 import { gettext } from 'outlinejs/utils/translation';
 import 'bootstrap';
 
@@ -8,7 +9,7 @@ export class LayoutView extends BaseView {
     var Content = this.props.content;
 
     return <div id="page-top">
-      <NavView />
+      <NavView { ...this.props.contentProps } />
 
       <Content { ...this.props.contentProps } controller={ this.controller }/>
 
@@ -44,7 +45,43 @@ export class HeaderView extends BaseView {
 
 
 export class NavView extends BaseView {
+
+
   render() {
+
+    let navbarRight;
+    if (this.props.currentUser.firstName !== undefined) {
+      navbarRight =
+        <ul className="nav navbar-nav navbar-right">
+          <li>
+            <a href={ RouteUtils.reverse('profile:main') }>
+              { gettext('Hi') } { this.props.currentUser.firstName } <i className="fa fa-user"></i>
+            </a>
+          </li>
+          <li>
+            <a href={ RouteUtils.reverse('profile:main') }>
+              { gettext('Go to your profile') } <i className="fa fa-user"></i>
+            </a>
+          </li>
+
+          <li>
+            <a href={ RouteUtils.reverse('profile:addSkills') }>
+              { gettext('Add some skills') } <i className="fa fa-user"></i>
+            </a>
+          </li>
+        </ul>;
+    } else {
+      navbarRight = <ul className="nav navbar-nav navbar-right">
+        <li>
+          <a className="page-scroll"
+             href="https://skillask.herokuapp.com/login/facebook/">{ gettext('Login with Facebook') } <i
+            className="fa fa-facebook"></i>
+          </a>
+        </li>
+      </ul>;
+    }
+
+
     return <nav id="mainNav" className="navbar navbar-default navbar-fixed-top">
       <div className="container-fluid">
 
@@ -57,20 +94,7 @@ export class NavView extends BaseView {
         </div>
 
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul className="nav navbar-nav navbar-right">
-            <li>
-              <a className="page-scroll" href="#about">{ gettext('About:') }</a>
-            </li>
-            <li>
-              <a className="page-scroll" href="#services">{ gettext('Services:') }</a>
-            </li>
-            <li>
-              <a className="page-scroll" href="#portfolio">{ gettext('Portfolio:') }</a>
-            </li>
-            <li>
-              <a className="page-scroll" href="#contact">{ gettext('Contacts:') }</a>
-            </li>
-          </ul>
+          { navbarRight }
         </div>
 
       </div>

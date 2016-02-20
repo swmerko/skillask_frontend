@@ -89,6 +89,10 @@ export class SearchView extends BaseView {
     this.controller.getSuggestions(suggestionString);
   }
 
+  handleSelect(suggestion) {
+    this.controller.search(suggestion);
+  }
+
   render() {
     var resultsView;
 
@@ -123,7 +127,7 @@ export class SearchView extends BaseView {
                */}
 
 
-              <SearchInputView controller={ this.controller }/>
+              <SearchInputView controller={ this.controller } handleSelect={ this.handleSelect }/>
 
             </div>
           </div>

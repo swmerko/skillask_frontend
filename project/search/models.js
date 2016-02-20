@@ -28,4 +28,8 @@ export class UserSkill extends BaseModel {
   get userProfileImageUrl() {
     return this.get('user_profile_image_url');
   }
+
+  get urlRoot() {
+    return 'https://skillask.herokuapp.com/skills/api/user_skills/';
+  }
 }

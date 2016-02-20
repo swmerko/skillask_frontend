@@ -20,7 +20,7 @@ export class SearchController extends BaseLayoutController {
   init() {
     this.layoutView = LayoutView;
     this.view = SearchView;
-
+    this.currentUser = null;
     this.users = [];
     this.skillsSuggestions = [];
     this.searchString = '';
