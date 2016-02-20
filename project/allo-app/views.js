@@ -41,7 +41,7 @@ export class AlloView extends BaseView {
       </div>
 
       <div className="footer">
-        <p>♥ from the Yeoman team</p>
+        <p>♥ from the Yeoman team <i class="fa fa-camera-retro fa-lg"></i>sdasd</p>
       </div>
     </div>;
   }
