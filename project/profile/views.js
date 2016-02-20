@@ -43,8 +43,6 @@ export class AddSkillView extends BaseView {
   render() {
     let userSkills;
 
-    console.log('le skill dell utente');
-
     if (this.props.userSkills.length > 0) {
       userSkills = <ul>
         {
@@ -53,7 +51,7 @@ export class AddSkillView extends BaseView {
               <div className="skill-box-text">
 
                 { userSkill.skillName }
-                <span onClick={ this.handleRemoveSkill.bind(this, userSkill)} class="badge pull-right"> x</span>
+                <span onClick={ this.handleRemoveSkill.bind(this, userSkill)} className="badge pull-right"><i className="fa fa-trash-o"></i></span>
               </div>
             </div>;
           })

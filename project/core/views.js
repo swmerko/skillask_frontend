@@ -49,8 +49,10 @@ export class NavView extends BaseView {
 
   render() {
 
+    let currentUserIsAuthenticaed = this.props.currentUser && this.props.currentUser.firstName !== undefined;
+
     let navbarRight;
-    if (this.props.currentUser.firstName !== undefined) {
+    if (currentUserIsAuthenticaed) {
       navbarRight =
         <ul className="nav navbar-nav navbar-right">
           <li>

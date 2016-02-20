@@ -6,35 +6,7 @@ import { UserSkillCollection } from '../search/managers';
 import { SkillCollection } from '../skills/managers';
 import { UserSkill } from '../search/models';
 //import { queryString } from 'query-string';
-const queryString = require('query-string');
-
-
-const setAuthCookie = function (cname, cvalue, exdays, domain, path = '/') {
-  let d = new Date();
-  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-  let expires = `;expires=${d.toUTCString()}`;
-  let authCookie = `${cname}=${cvalue}${expires}`;
-  if (domain) {
-    authCookie += `;domain=${domain};path=${path}`;
-  }
-  document.cookie = authCookie;
-};
-
-const getAuthCookie = function (cname) {
-  var name = cname + '=';
-  var ca = document.cookie.split(';');
-  for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  console.error('Token.getAuthCookie()', 'auth cookie not found!');
-  return '';
-};
+import { getAuthCookie } from '../auth/utils';
 
 export class ProfileController extends BaseLayoutController {
   static get loginRequired() {
@@ -48,24 +20,11 @@ export class ProfileController extends BaseLayoutController {
   }
 
   getCurrentUser() {
-    const qs = queryString.parse(location.search);
-    let bearerToken;
-    if (qs.token) {
-      setAuthCookie('bearerToken', 'Bearer ' + qs.token, 10, '');
-    }
-
-    bearerToken = getAuthCookie('bearerToken');
-    if (bearerToken) {
-      this.currentUser = new User({id: 'current'});
-
-      this.currentUser.fetch({headers: {Authorization: bearerToken}}).then(() => {
-        this.render(this.context);
-        console.log('fetch ok');
-      }).catch((err) => {
-        console.log('fetch in errore');
-        console.log(err);
-      });
-    }
+    let bearerToken = getAuthCookie('bearerToken');
+    this.currentUser = new User({id: 'current'});
+    return this.currentUser.fetch({headers: {Authorization: bearerToken}}).then(() => {
+      this.render(this.context);
+    });
   }
 
   init() {
@@ -91,30 +50,13 @@ export class AddSkillsProfileController extends BaseLayoutController {
     };
   }
 
-
   getCurrentUser() {
-    const qs = queryString.parse(location.search);
-    let bearerToken;
-    if (qs.token) {
-      setAuthCookie('bearerToken', 'Bearer ' + qs.token, 10, 'localhost');
-    }
-
-    bearerToken = getAuthCookie('bearerToken');
-    if (bearerToken) {
-      this.currentUser = new User({id: 'current'});
-
-      this.currentUser.fetch({headers: {Authorization: bearerToken}}).then(() => {
-
-        this.getUserSkills();
-
-
-        this.render(this.context);
-        console.log('currentUser', this.currentUser);
-      }).catch((err) => {
-        console.log('fetch in errore');
-        console.log(err);
-      });
-    }
+    let bearerToken = getAuthCookie('bearerToken');
+    this.currentUser = new User({id: 'current'});
+    return this.currentUser.fetch({headers: {Authorization: bearerToken}}).then(() => {
+      this.render(this.context);
+      this.getUserSkills();
+    });
   }
 
   addUserSkill(skillId, userId = this.currentUser.pk) {
@@ -159,6 +101,7 @@ export class AddSkillsProfileController extends BaseLayoutController {
 
   getUserSkills(userId = this.currentUser.pk) {
     let bearerToken = getAuthCookie('bearerToken');
+
     var userSkills = new UserSkillCollection();
     userSkills.fetch({
       data: {userId: userId},

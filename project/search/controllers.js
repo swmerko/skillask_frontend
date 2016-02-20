@@ -3,6 +3,8 @@ import { SearchView } from './views';
 import { LayoutView } from '../core/views';
 import { UserSkillCollection } from './managers';
 import { SkillCollection } from '../skills/managers';
+import { User } from '../core/models';
+import { getAuthCookie } from '../auth/utils';
 
 export class SearchController extends BaseLayoutController {
   static get loginRequired() {
@@ -13,7 +15,8 @@ export class SearchController extends BaseLayoutController {
     return {
       users: this.users,
       searchString: this.searchString,
-      skillsSuggestions: this.skillsSuggestions
+      skillsSuggestions: this.skillsSuggestions,
+      currentUser: this.currentUser
     };
   }
 
@@ -24,8 +27,19 @@ export class SearchController extends BaseLayoutController {
     this.users = [];
     this.skillsSuggestions = [];
     this.searchString = '';
+    this.currentUser = null;
+
+    this.getCurrentUser();
 
     this.render(this.context);
+  }
+
+  getCurrentUser() {
+    let bearerToken = getAuthCookie('bearerToken');
+    this.currentUser = new User({id: 'current'});
+    return this.currentUser.fetch({headers: {Authorization: bearerToken}}).then(() => {
+      this.render(this.context);
+    });
   }
 
   getSuggestions(searchString) {
