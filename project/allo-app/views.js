@@ -1,14 +1,13 @@
 import { BaseView } from 'outlinejs/views';
 import { BaseComponent } from 'outlinejs/components';
 import React from 'react';
-import { RouteUtils } from 'outlinejs/routers';
-import 'bootstrap';
+import { RouteUtils, Link } from 'outlinejs/routers';
 
 class MenuView extends BaseComponent {
   render() {
     return <ul className="nav nav-pills pull-right">
-      <li className={RouteUtils.isState('allo:home')}><a href={RouteUtils.reverse('allo:home')}>Home</a></li>
-      <li className={RouteUtils.isState('allo:other')}><a href={RouteUtils.reverse('allo:other', {detailId: 1})}>Other Page</a></li>
+      <li className={RouteUtils.isState('allo:home')}><Link state="allo:home">Home</Link></li>
+      <li className={RouteUtils.isState('allo:other')}><Link state="allo:other" params={{detailId: 1}}>Other Page</Link></li>
     </ul>;
   }
 }
@@ -18,7 +17,7 @@ export class AlloView extends BaseView {
     return <div className="container">
       <div className="header">
         <MenuView />
-        <h3 className="text-muted">skillask_frontend</h3>
+        <h3 className="text-muted">skillask frontend</h3>
       </div>
 
       <div className="jumbotron">
@@ -41,7 +40,7 @@ export class AlloView extends BaseView {
       </div>
 
       <div className="footer">
-        <p>♥ from the Yeoman team <i className="fa fa-camera-retro fa-lg"></i>sdasd</p>
+        <p>♥ from the Yeoman team</p>
       </div>
     </div>;
   }
@@ -52,7 +51,7 @@ export class AlloDetailView extends BaseView {
     return <div className="container">
       <div className="header">
         <MenuView />
-        <h3 className="text-muted">skillask_frontend</h3>
+        <h3 className="text-muted">skillask frontend</h3>
       </div>
 
       <div className="jumbotron">

@@ -113,19 +113,6 @@ export class SearchView extends BaseView {
             <div className="col-lg-8 col-lg-offset-2 text-center">
               <h2 className="section-heading">We've got the skills you need!</h2>
               <hr className="light"/>
-              {/*
-               <div className="input-group" id="bloodhound">
-               <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
-               <input className="form-control input-lg typeahead" type="search"
-               placeholder="Search the skill you want!" data-provide="typeahead"
-               autoComplete="off" onChange={ this.handleChange.bind(this) }
-               onKeyUp={ this.suggestionChange.bind(this) }/>
-
-               </div>
-
-               { suggestions }
-               */}
-
 
               <SearchInputView controller={ this.controller } handleSelect={ this.handleSelect }/>
 

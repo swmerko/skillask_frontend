@@ -27,9 +27,16 @@ export class ProfileController extends BaseLayoutController {
     });
   }
 
+
+  get layoutView() {
+    return LayoutView;
+  }
+
+  get view() {
+    return ProfileView;
+  }
+
   init() {
-    this.layoutView = LayoutView;
-    this.view = ProfileView;
     this.currentUser = null;
     this.getCurrentUser();
     //this.render(this.context);
@@ -41,6 +48,14 @@ export class AddSkillsProfileController extends BaseLayoutController {
     return false;
   }
 
+  get layoutView() {
+    return LayoutView
+  }
+
+  get view() {
+    return AddSkillView
+  }
+
   get context() {
     return {
       currentUser: this.currentUser,
@@ -48,6 +63,16 @@ export class AddSkillsProfileController extends BaseLayoutController {
       //autocompleteSkills: this.autocompleteSkills,
       suggestionsSkills: this.suggestionsSkills
     };
+  }
+
+  init() {
+    this.currentUser = null;
+    this.userSkills = [];
+    //this.autocompleteSkills = [];
+    this.suggestionsSkills = [];
+    this.getCurrentUser();
+    //this.getUserSkills();
+    this.render(this.context);
   }
 
   getCurrentUser() {
@@ -112,18 +137,6 @@ export class AddSkillsProfileController extends BaseLayoutController {
     }).catch((err) => {
       console.log(err);
     });
-  }
-
-  init() {
-    this.layoutView = LayoutView;
-    this.view = AddSkillView;
-    this.currentUser = null;
-    this.userSkills = [];
-    //this.autocompleteSkills = [];
-    this.suggestionsSkills = [];
-    this.getCurrentUser();
-    //this.getUserSkills();
-    this.render(this.context);
   }
 
 

@@ -5,6 +5,13 @@ import { UserSkillCollection } from './managers';
 import { SkillCollection } from '../skills/managers';
 import { User } from '../core/models';
 import { getAuthCookie } from '../auth/utils';
+import GridList from 'material-ui/lib/grid-list/grid-list';
+import GridTile from 'material-ui/lib/grid-list/grid-tile';
+import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
+import IconButton from 'material-ui/lib/icon-button';
+
+
+
 
 export class SearchController extends BaseLayoutController {
   static get loginRequired() {
@@ -20,18 +27,25 @@ export class SearchController extends BaseLayoutController {
     };
   }
 
+  get layoutView() {
+    return LayoutView;
+  }
+
+  get view() {
+    return SearchView;
+  }
+
   init() {
-    this.layoutView = LayoutView;
-    this.view = SearchView;
     this.currentUser = null;
     this.users = [];
     this.skillsSuggestions = [];
     this.searchString = '';
     this.currentUser = null;
 
-    this.getCurrentUser();
-
     this.render(this.context);
+
+    //this.getCurrentUser();
+
   }
 
   getCurrentUser() {
