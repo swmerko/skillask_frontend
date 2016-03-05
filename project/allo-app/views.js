@@ -1,14 +1,13 @@
-import { BaseView } from 'outlinejs/views';
-import { BaseComponent } from 'outlinejs/components';
+import { BaseView } from 'outlinejs/lib/views';
+import { BaseComponent } from 'outlinejs/lib/components';
 import React from 'react';
-import { RouteUtils } from 'outlinejs/routers';
-import 'bootstrap';
+import { RouteUtils, Link } from 'outlinejs/lib/routers';
 
 class MenuView extends BaseComponent {
   render() {
     return <ul className="nav nav-pills pull-right">
-      <li className={RouteUtils.isState('allo:home')}><a href={RouteUtils.reverse('allo:home')}>Home</a></li>
-      <li className={RouteUtils.isState('allo:other')}><a href={RouteUtils.reverse('allo:other', {detailId: 1})}>Other Page</a></li>
+      <li className={RouteUtils.isState('allo:home')}><Link state="allo:home">Home</Link></li>
+      <li className={RouteUtils.isState('allo:other')}><Link state="allo:other" params={{detailId: 1}}>Other Page</Link></li>
     </ul>;
   }
 }
@@ -35,13 +34,11 @@ export class AlloView extends BaseView {
           <p>Sass is the most mature, stable, and powerful professional grade CSS extension language in the world.</p>
           <h4>Bootstrap</h4>
           <p>Sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>
-          <h4>Modernizr</h4>
-          <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
         </div>
       </div>
 
       <div className="footer">
-        <p>♥ from the Yeoman team <i className="fa fa-camera-retro fa-lg"></i>sdasd</p>
+        <p>♥ from the Yeoman team</p>
       </div>
     </div>;
   }

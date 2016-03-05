@@ -1,4 +1,4 @@
-import { BaseController } from 'outlinejs/controllers';
+import { BaseController } from 'outlinejs/lib/controllers';
 import { AlloView, AlloDetailView } from './views';
 
 export class AlloController extends BaseController {
@@ -6,8 +6,11 @@ export class AlloController extends BaseController {
     return false;
   }
 
+  get view() {
+    return AlloView;
+  }
+
   init() {
-    this.view = AlloView;
     this.render();
   }
 
@@ -18,8 +21,11 @@ export class AlloDetailController extends BaseController {
     return false;
   }
 
+  get view() {
+    return AlloDetailView;
+  }
+
   init(detailId) {
-    this.view = AlloDetailView;
     this.render({detail: detailId});
   }
 
