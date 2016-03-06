@@ -11,3 +11,8 @@ gulp.task('default', ['ojs:clean'], () => {
   gulp.start('ojs:build');
 });
 
+//TODO: remove when pot task is fixed for ES7
+gulp.task('ojs:pot', (cb) => {
+  console.log('Bypassed until pot task is fixed for ES7');
+  cb();
+});
