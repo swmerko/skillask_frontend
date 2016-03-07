@@ -11,30 +11,29 @@ export class MyLayoutView extends BaseView {
       <div className="profile">Profile
         <Content { ...this.props.contentProps } delegate={ this.delegate }/>
       </div>
-      <div className="search focused">Search example</div>
-      <div className="profile unfocused">Profile example</div>
     </div>;
   }
 }
 
 export class MyContentView extends BaseView {
   render() {
-    var users;
-    if (this.props.users) {
-      users = <ul>
-        {
-          this.props.users.map((user) => {
-            return <li key={ user.id }>
-              <a href={`mailto:${user.email}`}>{ user.displayName }</a>
-            </li>;
-          })
-        }
-      </ul>;
-    }
 
-    return <div>
-      <p>{ this.props.myVar }</p>
-      { users }
+    return <div className="content-container">
+      <div className="search">
+        <h2>Search</h2>
+        <div className="search-input">
+          <SearchInputView/>
+        </div>
+        <hr/>
+        <div className="search-result">
+        </div>
+
+      </div>
+
+      <div className="profile unfocused">
+        <h2>Profile</h2>
+      </div>
+
     </div>;
   }
 }

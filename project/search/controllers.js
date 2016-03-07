@@ -1,6 +1,6 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
 import { BaseLayoutView } from '../core/views';
-import { SearchContentView } from './views';
+import { SearchView } from './views';
 import { UserSkillCollection } from '../skills/managers';
 import { gettext } from 'outlinejs/lib/utils/translation';
 import { runtime } from 'outlinejs/lib/contexts';
@@ -15,7 +15,7 @@ export class SearchContoller extends BaseLayoutController {
   }
 
   get view() {
-    return SearchContentView;
+    return SearchView;
   }
 
   get context() {
@@ -30,9 +30,9 @@ export class SearchContoller extends BaseLayoutController {
     this.render(this.context);
   }
 
-  async search() {
+  async search(skill) {
 
-    let userSkillsResult = await this.userSkills.all();
+    let userSkillsResult = await this.userSkills.filterBySkillId(skill.id);
     this.userSkills = userSkillsResult;
     this.render(this.context);
   }

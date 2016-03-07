@@ -1,4 +1,4 @@
-import { BaseView } from 'outlinejs/views';
+import { BaseView } from 'outlinejs/lib/views';
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { SkillCollection } from '../skills/managers';

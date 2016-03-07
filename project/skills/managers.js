@@ -33,6 +33,10 @@ export class UserSkillCollection extends BaseCollection {
     return await this.fetch();
   }
 
+  async filterBySkillId(skillId) {
+    return await this.fetch({data: {skillId: skillId}});
+  }
+
   parse(response) {
     return response.results;
   }
