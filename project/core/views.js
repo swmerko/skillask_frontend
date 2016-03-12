@@ -1,8 +1,8 @@
-import { BaseView } from 'outlinejs/lib/views';
+import { BaseLayoutView } from 'outlinejs/lib/views';
 import React from 'react';
 import { gettext } from 'outlinejs/lib/utils/translation';
 
-export class BaseLayoutView extends BaseView {
+export class LayoutView extends BaseLayoutView {
   render() {
     var Content = this.props.content;
 

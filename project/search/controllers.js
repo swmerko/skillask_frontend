@@ -1,9 +1,9 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
-import { BaseLayoutView } from '../core/views';
-import { SearchView } from './views';
+import { LayoutView } from '../core/views';
+import { SearchContentView } from './views';
 import { UserSkillCollection } from '../skills/managers';
 import { gettext } from 'outlinejs/lib/utils/translation';
-import { runtime } from 'outlinejs/lib/contexts';
+//import { runtime } from 'outlinejs/lib/contexts';
 
 export class SearchContoller extends BaseLayoutController {
   static get loginRequired() {
@@ -11,11 +11,11 @@ export class SearchContoller extends BaseLayoutController {
   }
 
   get layoutView() {
-    return BaseLayoutView;
+    return LayoutView;
   }
 
   get view() {
-    return SearchView;
+    return SearchContentView;
   }
 
   get context() {
@@ -26,14 +26,18 @@ export class SearchContoller extends BaseLayoutController {
 
   init() {
     this.userSkills = new UserSkillCollection();
-    this.search();
     this.render(this.context);
   }
 
   async search(skill) {
-
-    let userSkillsResult = await this.userSkills.filterBySkillId(skill.id);
-    this.userSkills = userSkillsResult;
+    console.log('inizio', skill.id);
+    if (skill.id) {
+      let userSkillsResult = await this.userSkills.filterBySkillId(skill.id);
+      this.userSkills = userSkillsResult;
+    } else {
+      this.userSkills = [];
+    }
+    console.log('fine');
     this.render(this.context);
   }
 

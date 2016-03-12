@@ -1,41 +1,12 @@
 import { BaseView } from 'outlinejs/lib/views';
 import React from 'react';
-import { gettext } from 'outlinejs/lib/utils/translation';
 import { SearchInputView } from './components';
 import GridList from 'material-ui/lib/grid-list/grid-list';
 import GridTile from 'material-ui/lib/grid-list/grid-tile';
 import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from 'material-ui/lib/icon-button';
 
-
-export class SearchContentView extends BaseView {
-  render() {
-    var users;
-    if (this.props.userSkills) {
-      users = <ul>
-        {
-          this.props.userSkills.map((userSkill) => {
-            return <li key={ userSkill.id }>
-              { userSkill.userFullName }
-            </li>;
-          })
-        }
-      </ul>;
-    }
-
-    return <div className="content-container">
-      <div className="search focused">
-        <h2>Search</h2>
-        { users }
-      </div>
-
-      <div className="profile unfocused">
-        <h2>Profile</h2>
-      </div>
-
-    </div>;
-  }
-}
+import { BaseComponent } from 'outlinejs/lib/components';
 
 const styles = {
   root: {
@@ -49,7 +20,7 @@ const styles = {
   }
 };
 
-class ResultsView extends BaseView {
+class ResultsView extends BaseComponent {
   render() {
     var results;
     if (this.props.userSkills.length > 0) {
@@ -80,16 +51,19 @@ class ResultsView extends BaseView {
 }
 
 
-export class SearchView extends BaseView {
+export class SearchContentView extends BaseView {
 
-  handleChange(event) {
-    var searchString = event.target.value;
-    this.delegate.search(searchString);
-  }
-
-  suggestionChange(event) {
-    var suggestionString = event.target.value;
-    this.delegate.getSuggestions(suggestionString);
+  //handleChange(event) {
+  //  var searchString = event.target.value;
+  //  this.delegate.search(searchString);
+  //}
+  //
+  //suggestionChange(event) {
+  //  var suggestionString = event.target.value;
+  //  this.delegate.getSuggestions(suggestionString);
+  //}
+  goToProfile() {
+    this.response.navigate('profile:main', {});
   }
 
   handleSelect(suggestion) {
@@ -101,7 +75,7 @@ export class SearchView extends BaseView {
 
     return <div className="content-container">
       <div className="search focused">
-        <h2>Search</h2>
+        <h2>{ this.i18n.gettext('Search')}</h2>
         <div className="search-input">
           <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect }/>
         </div>
@@ -112,8 +86,8 @@ export class SearchView extends BaseView {
 
       </div>
 
-      <div className="profile unfocused">
-        <h2>Profile</h2>
+      <div className="profile unfocused" onClick={this.goToProfile.bind(this)}>
+        <h2>{ this.i18n.gettext('Profile')}</h2>
       </div>
 
     </div>;

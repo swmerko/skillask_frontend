@@ -1,13 +1,14 @@
-import { BaseView } from 'outlinejs/lib/views';
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { SkillCollection } from '../skills/managers';
+
+import { BaseComponent } from 'outlinejs/lib/components';
 
 /* ----------- */
 /*    Utils    */
 /* ----------- */
 
-export class SearchInputView extends BaseView {
+export class SearchInputView extends BaseComponent {
 
   constructor() {
     super();
