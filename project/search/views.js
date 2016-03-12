@@ -1,140 +1,94 @@
-import { BaseView } from 'outlinejs/views';
+import { BaseView } from 'outlinejs/lib/views';
 import React from 'react';
-import { gettext } from 'outlinejs/utils/translation';
-import { BaseComponent } from 'outlinejs/components';
 import { SearchInputView } from './components';
+import GridList from 'material-ui/lib/grid-list/grid-list';
+import GridTile from 'material-ui/lib/grid-list/grid-tile';
+import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
+import IconButton from 'material-ui/lib/icon-button';
 
-class InizialSearchResultsView extends BaseComponent {
-  render() {
-    return <section>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12 text-center">
-            <h2 className="section-heading"> { gettext('Type something to star searching things') }</h2>
-            <hr className="primary"/>
-          </div>
-        </div>
-      </div>
-      <div className="container">
-        <div className="row">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.
-          Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis,
-          ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-        </div>
-      </div>
-    </section>;
+import { BaseComponent } from 'outlinejs/lib/components';
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
+  },
+  gridList: {
+    overflowY: 'auto',
+    margin: 30
   }
-}
+};
 
-class SearchNoResultsView extends BaseComponent {
-  render() {
-    return <div>
-      { gettext('No results') }
-    </div>;
-  }
-}
-
-
-class ResultsView extends BaseView {
+class ResultsView extends BaseComponent {
   render() {
     var results;
-    if (this.props.users.length > 0) {
-      results = <ul>
-        {
-          this.props.users.map((userSkill) => {
-            console.log(userSkill);
-            return <div key={ userSkill.id } className="col-lg-3 col-md-6 text-center">
-              <div className="service-box">
-                <img src={ userSkill.userProfileImageUrl }/>
-
-                <h3>{ userSkill.userFullName }</h3>
-
-                <p className="text-muted">{ userSkill.skillName }</p>
-              </div>
-            </div>;
-          })
-        }
-      </ul>;
+    if (this.props.userSkills.length > 0) {
+      results = <div style={styles.root}>
+        <GridList
+          cellHeight={300}
+          style={styles.gridList}
+          cols={3}
+          rows={1}
+        >
+          {this.props.userSkills.map(user => <GridTile
+              key={user.id}
+              title={user.skillName}
+              subtitle={<span>by <b>{user.userFullName}</b></span>}
+              actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
+            >
+              <img src={user.userProfileImageUrl}/>
+            </GridTile>
+          )}
+        </GridList>
+      </div>;
     } else {
-      results = <SearchNoResultsView />;
+      results = <h1>Nessun risultato</h1>;
     }
 
-    return <section>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12 text-center">
-            <h2 className="section-heading">Search - { this.props.searchString } </h2>
-            <hr className="primary"/>
-          </div>
-        </div>
-      </div>
-      <div className="container">
-        <div className="row">
-          { results }
-        </div>
-      </div>
-    </section>;
+    return results;
   }
 }
 
-export class SearchView extends BaseView {
 
-  handleChange(event) {
-    var searchString = event.target.value;
-    this.controller.search(searchString);
-  }
+export class SearchContentView extends BaseView {
 
-  suggestionChange(event) {
-    var suggestionString = event.target.value;
-    this.controller.getSuggestions(suggestionString);
+  //handleChange(event) {
+  //  var searchString = event.target.value;
+  //  this.delegate.search(searchString);
+  //}
+  //
+  //suggestionChange(event) {
+  //  var suggestionString = event.target.value;
+  //  this.delegate.getSuggestions(suggestionString);
+  //}
+  goToProfile() {
+    this.response.navigate('profile:main', {});
   }
 
   handleSelect(suggestion) {
-    this.controller.search(suggestion);
+    this.delegate.search(suggestion);
   }
 
   render() {
-    var resultsView;
-
-    if (this.props.searchString.length > 0) {
-      resultsView = <ResultsView searchString={ this.props.searchString }
-                                 users={ this.props.users }
-                                 controller={ this.controller }/>;
-    } else {
-      resultsView = <InizialSearchResultsView />;
-    }
 
 
-    return <div>
-
-      <section className="bg-primary" id="about">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-8 col-lg-offset-2 text-center">
-              <h2 className="section-heading">We've got the skills you need!</h2>
-              <hr className="light"/>
-              {/*
-               <div className="input-group" id="bloodhound">
-               <span className="input-group-addon"><i className="fa fa-search fa-fw"></i></span>
-               <input className="form-control input-lg typeahead" type="search"
-               placeholder="Search the skill you want!" data-provide="typeahead"
-               autoComplete="off" onChange={ this.handleChange.bind(this) }
-               onKeyUp={ this.suggestionChange.bind(this) }/>
-
-               </div>
-
-               { suggestions }
-               */}
-
-
-              <SearchInputView controller={ this.controller } handleSelect={ this.handleSelect }/>
-
-            </div>
-          </div>
+    return <div className="content-container">
+      <div className="search focused">
+        <h2>{ this.i18n.gettext('Search')}</h2>
+        <div className="search-input">
+          <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect }/>
         </div>
-      </section>
+        <hr/>
+        <div className="search-result">
+          <ResultsView delegate={ this.delegate } userSkills={ this.props.userSkills }/>
+        </div>
 
-      { resultsView }
+      </div>
+
+      <div className="profile unfocused" onClick={this.goToProfile.bind(this)}>
+        <h2>{ this.i18n.gettext('Profile')}</h2>
+      </div>
 
     </div>;
   }

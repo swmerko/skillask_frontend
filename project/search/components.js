@@ -1,13 +1,14 @@
-import { BaseView } from 'outlinejs/views';
 import React from 'react';
 import Autosuggest from 'react-autosuggest';
 import { SkillCollection } from '../skills/managers';
+
+import { BaseComponent } from 'outlinejs/lib/components';
 
 /* ----------- */
 /*    Utils    */
 /* ----------- */
 
-export class SearchInputView extends BaseView {
+export class SearchInputView extends BaseComponent {
 
   constructor() {
     super();
@@ -90,9 +91,9 @@ export class SearchInputView extends BaseView {
       onChange: this.onChange
     };
     //const status = isLoading ? 'Loading...' : 'Type to load suggestions';
-    const loadingClass = isLoading ? 'loader' : '';
+    const loadingClass = isLoading ? 'loading' : '';
 
-    return <div class={ loadingClass }>
+    return <div className={ loadingClass }>
       <Autosuggest controller={ this.controller }
                    suggestions={suggestions}
                    onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
