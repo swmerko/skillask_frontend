@@ -11,15 +11,6 @@ import { BaseComponent } from 'outlinejs/lib/components';
 
 export class SearchContentView extends BaseView {
 
-  //handleChange(event) {
-  //  var searchString = event.target.value;
-  //  this.delegate.search(searchString);
-  //}
-  //
-  //suggestionChange(event) {
-  //  var suggestionString = event.target.value;
-  //  this.delegate.getSuggestions(suggestionString);
-  //}
   goToProfile() {
     this.response.navigate('profile:main', {});
   }
@@ -70,7 +61,7 @@ const styles = {
 class ResultsView extends BaseComponent {
   render() {
     var results;
-    if (this.props.userSkills.length > 0) {
+    if (this.props.userSkills && this.props.userSkills.length > 0) {
       results = <div style={styles.root}>
         <GridList
           cellHeight={300}

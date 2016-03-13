@@ -18,6 +18,10 @@ export class SkillCollection extends BaseCollection {
   parse(response) {
     return response.results;
   }
+
+  filterBySkillName(skillName) {
+    return this.fetch({data: {search: skillName}});
+  }
 }
 
 export class UserSkillCollection extends BaseCollection {

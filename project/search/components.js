@@ -28,7 +28,22 @@ export class SearchInputView extends BaseComponent {
     this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
   }
 
-  loadSuggestions(value) {
+
+  async searchSkillSuggestions(skillName) {
+    if (skillName) {
+      let skillsSuggestionsCollection = new SkillCollection();
+      let skillSuggestions = await skillsSuggestionsCollection.filterBySkillName(skillName);
+      let cleanedSkillSuggestions = [];
+      skillSuggestions.forEach(function (suggestion) {
+        cleanedSkillSuggestions.push({id: suggestion.id, name: suggestion.name});
+      });
+      return cleanedSkillSuggestions;
+    } else {
+      return [];
+    }
+  }
+
+  async loadSuggestions(value) {
     const cacheKey = value.trim().toLowerCase();
 
     if (this.cache[cacheKey]) {
@@ -40,33 +55,28 @@ export class SearchInputView extends BaseComponent {
         isLoading: true
       });
 
-      var skillsSuggestions = new SkillCollection();
-      skillsSuggestions.fetch({data: {search: value}}).then(() => {
-
-        if (value === this.state.value) {
-          this.cache[cacheKey] = skillsSuggestions;
-          this.setState({
-            isLoading: false,
-            suggestions: skillsSuggestions.toJSON()
-          });
-        } else { // Ignore suggestions if input value changed
-          this.setState({
-            isLoading: false
-          });
-        }
-      }).catch((err) => {
-        console.log(err);
-      });
+      var skillsSuggestions = await this.searchSkillSuggestions(value);
+      if (value === this.state.value) {
+        this.cache[cacheKey] = skillsSuggestions;
+        this.setState({
+          isLoading: false,
+          suggestions: skillsSuggestions
+        });
+      } else { // Ignore suggestions if input value changed
+        this.setState({
+          isLoading: false
+        });
+      }
     }
   }
 
-  onChange(event, { newValue }) {
+  onChange(event, {newValue}) {
     this.setState({
       value: newValue
     });
   }
 
-  onSuggestionsUpdateRequested({ value }) {
+  onSuggestionsUpdateRequested({value}) {
     this.loadSuggestions(value);
   }
 
@@ -79,7 +89,7 @@ export class SearchInputView extends BaseComponent {
     return <span>{suggestion.name}</span>;
   }
 
-  onSuggestionSelected(event, { suggestion }) {
+  onSuggestionSelected(event, {suggestion}) {
     this.props.handleSelect(suggestion);
   }
 
@@ -94,8 +104,7 @@ export class SearchInputView extends BaseComponent {
     const loadingClass = isLoading ? 'loading' : '';
 
     return <div className={ loadingClass }>
-      <Autosuggest controller={ this.controller }
-                   suggestions={suggestions}
+      <Autosuggest suggestions={suggestions}
                    onSuggestionsUpdateRequested={this.onSuggestionsUpdateRequested}
                    onSuggestionSelected={this.onSuggestionSelected}
                    getSuggestionValue={this.getSuggestionValue}
