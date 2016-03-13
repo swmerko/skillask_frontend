@@ -1,10 +1,12 @@
-import { SearchContoller } from './controllers';
 import { BaseRouter, url } from 'outlinejs/lib/routers';
+
+import { SearchContoller, SearchSkillContoller } from './controllers';
 
 export default class extends BaseRouter {
   get urlPatterns() {
     return {
-      '': url('search:main', SearchContoller)
+      '': url('search:main', SearchContoller),
+      'skill/:skillId:': url('search:skill', SearchSkillContoller)
     };
   }
 }

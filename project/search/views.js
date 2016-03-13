@@ -8,6 +8,53 @@ import IconButton from 'material-ui/lib/icon-button';
 
 import { BaseComponent } from 'outlinejs/lib/components';
 
+
+export class SearchContentView extends BaseView {
+
+  //handleChange(event) {
+  //  var searchString = event.target.value;
+  //  this.delegate.search(searchString);
+  //}
+  //
+  //suggestionChange(event) {
+  //  var suggestionString = event.target.value;
+  //  this.delegate.getSuggestions(suggestionString);
+  //}
+  goToProfile() {
+    this.response.navigate('profile:main', {});
+  }
+
+  handleSelect(suggestion) {
+    console.log(this);
+    this.response.navigate('search:skill', {skillId: suggestion.id});
+  }
+
+
+  render() {
+
+
+    return <div className="content-container">
+      <div className="search focused">
+        <h2>{ this.i18n.gettext('Search')}</h2>
+        <div className="search-input">
+          <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect.bind(this) }/>
+        </div>
+        <hr/>
+        <div className="search-help">
+          <h4>Here how to search and bla bla</h4>
+        </div>
+
+      </div>
+
+      <div className="profile unfocused" onClick={this.goToProfile.bind(this)}>
+        <h2>{ this.i18n.gettext('Profile')}</h2>
+      </div>
+
+    </div>;
+  }
+}
+
+
 const styles = {
   root: {
     display: 'flex',
@@ -51,23 +98,15 @@ class ResultsView extends BaseComponent {
 }
 
 
-export class SearchContentView extends BaseView {
+export class SearchSkillContentView extends BaseView {
 
-  //handleChange(event) {
-  //  var searchString = event.target.value;
-  //  this.delegate.search(searchString);
-  //}
-  //
-  //suggestionChange(event) {
-  //  var suggestionString = event.target.value;
-  //  this.delegate.getSuggestions(suggestionString);
-  //}
   goToProfile() {
+    console.log(this);
     this.response.navigate('profile:main', {});
   }
 
   handleSelect(suggestion) {
-    this.delegate.search(suggestion);
+    this.response.navigate('search:skill', {skillId: suggestion.id});
   }
 
   render() {
@@ -77,7 +116,7 @@ export class SearchContentView extends BaseView {
       <div className="search focused">
         <h2>{ this.i18n.gettext('Search')}</h2>
         <div className="search-input">
-          <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect }/>
+          <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect.bind(this) }/>
         </div>
         <hr/>
         <div className="search-result">
