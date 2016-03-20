@@ -1,5 +1,5 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
-import { LayoutView } from '../core/views';
+import { MaterialLayoutView } from '../core/views';
 import { ProfileContentView } from './views';
 import { gettext } from 'outlinejs/lib/utils/translation';
 
@@ -9,7 +9,7 @@ export class ProfileContoller extends BaseLayoutController {
   }
 
   get layoutView() {
-    return LayoutView;
+    return MaterialLayoutView;
   }
 
   get view() {

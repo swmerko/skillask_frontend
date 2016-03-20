@@ -1,8 +1,58 @@
 import React from 'react';
-import Autosuggest from 'react-autosuggest';
-import { SkillCollection } from '../skills/managers';
 
 import { BaseComponent } from 'outlinejs/lib/components';
+
+import Autosuggest from 'react-autosuggest';
+import GridList from 'material-ui/lib/grid-list/grid-list';
+import GridTile from 'material-ui/lib/grid-list/grid-tile';
+import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
+import IconButton from 'material-ui/lib/icon-button';
+
+import { SkillCollection } from '../skills/managers';
+
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
+  },
+  gridList: {
+    overflowY: 'auto',
+    margin: 30
+  }
+};
+
+class ResultsView extends BaseComponent {
+  render() {
+    var results;
+    if (this.props.userSkills && this.props.userSkills.length > 0) {
+      results = <div style={styles.root}>
+        <GridList
+          cellHeight={300}
+          style={styles.gridList}
+          cols={3}
+          rows={1}
+        >
+          {this.props.userSkills.map(user => <GridTile
+              key={user.id}
+              title={user.skillName}
+              subtitle={<span>by <b>{user.userFullName}</b></span>}
+              actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
+            >
+              <img src={user.userProfileImageUrl}/>
+            </GridTile>
+          )}
+        </GridList>
+      </div>;
+    } else {
+      results = <h1>Nessun risultato</h1>;
+    }
+
+    return results;
+  }
+}
+
 
 /* ----------- */
 /*    Utils    */
@@ -110,6 +160,30 @@ export class SearchInputView extends BaseComponent {
                    getSuggestionValue={this.getSuggestionValue}
                    renderSuggestion={this.renderSuggestion}
                    inputProps={inputProps}/>
+    </div>;
+  }
+}
+
+
+export class SearchComponent extends BaseComponent {
+
+  handleSelect(suggestion) {
+    this.response.navigate('search:skill', {skillId: suggestion.id});
+  }
+
+  render() {
+
+
+    return <div className="content-container">
+      <h2>{ this.i18n.gettext('Search')}</h2>
+      <div className="search-input">
+        <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect.bind(this) }/>
+      </div>
+      <hr/>
+      <div className="search-result">
+        <ResultsView delegate={ this.delegate } userSkills={ this.props.userSkills }/>
+      </div>
+
     </div>;
   }
 }

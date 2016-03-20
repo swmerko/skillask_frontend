@@ -1,16 +1,17 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
 
-import { LayoutView } from '../core/views';
+import { MaterialLayoutView } from '../core/views';
 import { UserSkillCollection } from '../skills/managers';
-import { SearchContentView, SearchSkillContentView } from './views';
+import { SearchContentView } from './views';
 
-export class SearchContoller extends BaseLayoutController {
+
+export class SearchSkillContoller extends BaseLayoutController {
   static get loginRequired() {
     return false;
   }
 
   get layoutView() {
-    return LayoutView;
+    return MaterialLayoutView;
   }
 
   get view() {
@@ -23,35 +24,13 @@ export class SearchContoller extends BaseLayoutController {
     };
   }
 
-  init() {
-    this.userSkills = new UserSkillCollection();
-    this.render(this.context);
-  }
-
-}
-
-export class SearchSkillContoller extends BaseLayoutController {
-  static get loginRequired() {
-    return false;
-  }
-
-  get layoutView() {
-    return LayoutView;
-  }
-
-  get view() {
-    return SearchSkillContentView;
-  }
-
-  get context() {
-    return {
-      userSkills: this.userSkills
-    };
-  }
-
   init(skillId) {
-    this.userSkills = new UserSkillCollection();
-    this.searchBySkillId(skillId);
+    if (skillId) {
+      this.userSkills = new UserSkillCollection();
+      this.searchBySkillId(skillId);
+    } else {
+      this.userSkills = [];
+    }
     this.render(this.context);
   }
 

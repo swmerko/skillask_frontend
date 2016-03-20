@@ -1,6 +1,6 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
 import { HomeView } from './views';
-import { LayoutView } from '../core/views';
+import { MaterialLayoutView } from '../core/views';
 
 export class MyController extends BaseLayoutController {
   static get loginRequired() {
@@ -8,7 +8,7 @@ export class MyController extends BaseLayoutController {
   }
 
   get layoutView() {
-    return LayoutView;
+    return MaterialLayoutView;
   }
 
   get view() {

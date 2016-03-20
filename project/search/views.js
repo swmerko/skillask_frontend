@@ -1,12 +1,12 @@
-import { BaseView } from 'outlinejs/lib/views';
 import React from 'react';
-import { SearchInputView } from './components';
-import GridList from 'material-ui/lib/grid-list/grid-list';
-import GridTile from 'material-ui/lib/grid-list/grid-tile';
-import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
-import IconButton from 'material-ui/lib/icon-button';
+import ReactDOM from 'react-dom';
 
-import { BaseComponent } from 'outlinejs/lib/components';
+import { BaseView } from 'outlinejs/lib/views';
+
+import jQuery from 'jquery';
+
+import { SearchComponent } from './components';
+import { ProfileComponent } from '../profile/components';
 
 
 export class SearchContentView extends BaseView {
@@ -15,9 +15,22 @@ export class SearchContentView extends BaseView {
     this.response.navigate('profile:main', {});
   }
 
-  handleSelect(suggestion) {
-    console.log(this);
-    this.response.navigate('search:skill', {skillId: suggestion.id});
+  componentDidMount() {
+    let searchContainer = ReactDOM.findDOMNode(this.refs.searchContainer);
+    let profileContainer = ReactDOM.findDOMNode(this.refs.profileContainer);
+
+    jQuery(profileContainer).animate({
+      opacity: 0.25,
+      width: '23.7288135593%'
+    }, 500, function () {
+      jQuery(profileContainer).addClass('unfocused'); //eslint-disable-line
+    });
+    jQuery(searchContainer).animate({
+      opacity: 1,
+      width: '74.5762711864%'
+    }, 500, function () {
+      jQuery(searchContainer).addClass('focused'); //eslint-disable-line
+    });
   }
 
 
@@ -25,99 +38,14 @@ export class SearchContentView extends BaseView {
 
 
     return <div className="content-container">
-      <div className="search focused">
-        <h2>{ this.i18n.gettext('Search')}</h2>
-        <div className="search-input">
-          <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect.bind(this) }/>
-        </div>
-        <hr/>
-        <div className="search-help">
-          <h4>Here how to search and bla bla</h4>
-        </div>
+      <div className="search" ref="searchContainer">
+
+        <SearchComponent delegate={ this.delegate } userSkills={this.props.userSkills}/>
 
       </div>
 
-      <div className="profile unfocused" onClick={this.goToProfile.bind(this)}>
-        <h2>{ this.i18n.gettext('Profile')}</h2>
-      </div>
-
-    </div>;
-  }
-}
-
-
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around'
-  },
-  gridList: {
-    overflowY: 'auto',
-    margin: 30
-  }
-};
-
-class ResultsView extends BaseComponent {
-  render() {
-    var results;
-    if (this.props.userSkills && this.props.userSkills.length > 0) {
-      results = <div style={styles.root}>
-        <GridList
-          cellHeight={300}
-          style={styles.gridList}
-          cols={3}
-          rows={1}
-        >
-          {this.props.userSkills.map(user => <GridTile
-              key={user.id}
-              title={user.skillName}
-              subtitle={<span>by <b>{user.userFullName}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-            >
-              <img src={user.userProfileImageUrl}/>
-            </GridTile>
-          )}
-        </GridList>
-      </div>;
-    } else {
-      results = <h1>Nessun risultato</h1>;
-    }
-
-    return results;
-  }
-}
-
-
-export class SearchSkillContentView extends BaseView {
-
-  goToProfile() {
-    console.log(this);
-    this.response.navigate('profile:main', {});
-  }
-
-  handleSelect(suggestion) {
-    this.response.navigate('search:skill', {skillId: suggestion.id});
-  }
-
-  render() {
-
-
-    return <div className="content-container">
-      <div className="search focused">
-        <h2>{ this.i18n.gettext('Search')}</h2>
-        <div className="search-input">
-          <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect.bind(this) }/>
-        </div>
-        <hr/>
-        <div className="search-result">
-          <ResultsView delegate={ this.delegate } userSkills={ this.props.userSkills }/>
-        </div>
-
-      </div>
-
-      <div className="profile unfocused" onClick={this.goToProfile.bind(this)}>
-        <h2>{ this.i18n.gettext('Profile')}</h2>
+      <div className="profile" ref="profileContainer" onClick={this.goToProfile.bind(this)}>
+        <ProfileComponent />
       </div>
 
     </div>;

@@ -1,7 +1,12 @@
-import { BaseView } from 'outlinejs/lib/views';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-import { BaseComponent } from 'outlinejs/lib/components';
+import { BaseView } from 'outlinejs/lib/views';
+
+import jQuery from 'jquery';
+
+import { ProfileComponent } from './components';
+import { SearchComponent } from '../search/components';
 
 
 export class ProfileContentView extends BaseView {
@@ -9,16 +14,36 @@ export class ProfileContentView extends BaseView {
     this.response.navigate('search:main', {});
   }
 
+  componentDidMount() {
+    let searchContainer = ReactDOM.findDOMNode(this.refs.searchContainer);
+    let profileContainer = ReactDOM.findDOMNode(this.refs.profileContainer);
+
+    jQuery(searchContainer).animate({
+      opacity: 0.25,
+      width: '23.7288135593%'
+    }, 500, function () {
+      jQuery(profileContainer).addClass('unfocused'); //eslint-disable-line
+    });
+    jQuery(profileContainer).animate({
+      opacity: 1,
+      width: '74.5762711864%'
+    }, 500, function () {
+      jQuery(searchContainer).addClass('focused'); //eslint-disable-line
+    });
+  }
+
+
   render() {
 
 
     return <div className="content-container">
-      <div className="search unfocused" onClick={this.goToSearch.bind(this)}>
-        <h2>{ this.i18n.gettext('Search')}</h2>
+      <div className="search" onClick={this.goToSearch.bind(this)} ref="searchContainer">
+        <SearchComponent delegate={ this.delegate } userSkills={this.props.userSkills}/>
       </div>
 
-      <div className="profile focused">
-        <h2>{ this.i18n.gettext('Profile')}</h2>
+      <div className="profile" ref="profileContainer">
+        <ProfileComponent />
+
       </div>
 
     </div>;

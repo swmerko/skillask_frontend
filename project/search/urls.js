@@ -5,7 +5,7 @@ import { SearchContoller, SearchSkillContoller } from './controllers';
 export default class extends BaseRouter {
   get urlPatterns() {
     return {
-      '': url('search:main', SearchContoller),
+      '': url('search:main', SearchSkillContoller),
       'skill/:skillId:': url('search:skill', SearchSkillContoller)
     };
   }
