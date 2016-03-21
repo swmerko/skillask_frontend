@@ -30,7 +30,7 @@ export class SearchSkillContoller extends BaseLayoutController {
       this.userSkills = new UserSkillCollection();
       this.searchBySkillId(skillId);
     } else {
-      let initialUserSkills = globalContext.context.get('userSkills')
+      let initialUserSkills = globalContext.context.get('userSkills');
       if (initialUserSkills) {
         this.userSkills = initialUserSkills;
       } else {

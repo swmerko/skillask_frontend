@@ -1,6 +1,7 @@
-import { BaseLayoutView } from 'outlinejs/lib/views';
 import React from 'react';
-import { gettext } from 'outlinejs/lib/utils/translation';
+
+import { BaseLayoutView } from 'outlinejs/lib/views';
+
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
 import Colors from 'material-ui/lib/styles/colors';
