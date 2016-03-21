@@ -20,7 +20,7 @@ export class SearchContentView extends BaseView {
     let profileContainer = ReactDOM.findDOMNode(this.refs.profileContainer);
 
     jQuery(profileContainer).animate({
-      opacity: 0.25,
+      opacity: 0.9,
       width: '23.7288135593%'
     }, 500, function () {
       jQuery(profileContainer).addClass('unfocused'); //eslint-disable-line

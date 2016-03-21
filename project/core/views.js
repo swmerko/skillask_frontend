@@ -33,7 +33,7 @@ const muiTheme = getMuiTheme({
     disabledColor: ColorManipulator.fade(Colors.darkBlack, 0.3),
     pickerHeaderColor: Colors.cyan500
   }
-});
+}, {userAgent: 'all'});
 
 
 export class LayoutView extends BaseLayoutView {

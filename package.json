@@ -26,7 +26,8 @@
     "react-autosuggest": "^3.4.0",
     "query-string": "^3.0.0",
     "react-tap-event-plugin": "^0.2.2",
-    "material-ui": "^0.14.4"
+    "material-ui": "^0.14.4",
+    "immutable": "^3.7.6"
   },
   "browserify": {
     "transform": [

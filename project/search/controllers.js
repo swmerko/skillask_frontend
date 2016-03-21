@@ -4,6 +4,7 @@ import { MaterialLayoutView } from '../core/views';
 import { UserSkillCollection } from '../skills/managers';
 import { SearchContentView } from './views';
 
+import { globalContext } from '../global';
 
 export class SearchSkillContoller extends BaseLayoutController {
   static get loginRequired() {
@@ -29,7 +30,12 @@ export class SearchSkillContoller extends BaseLayoutController {
       this.userSkills = new UserSkillCollection();
       this.searchBySkillId(skillId);
     } else {
-      this.userSkills = [];
+      let initialUserSkills = globalContext.context.get('userSkills')
+      if (initialUserSkills) {
+        this.userSkills = initialUserSkills;
+      } else {
+        this.userSkills = [];
+      }
     }
     this.render(this.context);
   }
@@ -38,6 +44,11 @@ export class SearchSkillContoller extends BaseLayoutController {
     if (skillId) {
       let userSkillsResult = await this.userSkills.filterBySkillId(skillId);
       this.userSkills = userSkillsResult;
+
+      let newGlobalContext = globalContext.context.set('userSkills', userSkillsResult);
+
+      globalContext.context = newGlobalContext;
+
     } else {
       this.userSkills = [];
     }
