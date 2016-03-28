@@ -1,5 +1,5 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
-import { HomeView } from './views';
+import { AnimatedHomeView } from './views';
 import { MaterialLayoutView } from '../core/views';
 
 export class MyController extends BaseLayoutController {
@@ -12,10 +12,10 @@ export class MyController extends BaseLayoutController {
   }
 
   get view() {
-    return HomeView;
+    return AnimatedHomeView;
   }
 
   init() {
-    this.render({});
+    this.render({isHome: true});
   }
 }

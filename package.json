@@ -16,18 +16,20 @@
     "gulp-eslint": "^2.0.0"
   },
   "dependencies": {
-    "bootstrap-sass": "^3.3.6",
     "outlinejs": "^1.3.19",
     "jquery": "^2.1.4",
     "react": "^0.14.5",
     "babel-polyfill": "^6.6.0",
-    "susy": "^2.2.12",
+    "classnames": "^2.2.3",
+    "flexboxgrid": "^6.3.0",
+    "react-flexgrid": "^0.7.0",
     "font-awesome": "^4.5.0",
     "react-autosuggest": "^3.4.0",
     "query-string": "^3.0.0",
     "react-tap-event-plugin": "^0.2.2",
     "material-ui": "^0.14.4",
-    "immutable": "^3.7.6"
+    "immutable": "^3.7.6",
+    "react-addons-css-transition-group": "^0.14.7"
   },
   "browserify": {
     "transform": [
@@ -36,7 +38,6 @@
     ]
   },
   "browser": {
-    "bootstrap": "./node_modules/bootstrap-sass/assets/javascripts/bootstrap.js",
     "jquery": "./node_modules/jquery/dist/jquery.js"
   },
   "browserify-shim": {

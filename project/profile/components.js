@@ -5,8 +5,10 @@ import React from 'react';
 
 import { BaseComponent } from 'outlinejs/lib/components';
 
+import { Grid, Row, Col } from 'react-flexgrid';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
+import FloatingActionButton from 'material-ui/lib/floating-action-button';
 
 
 const styles = {
@@ -64,6 +66,34 @@ export class ProfileTabs extends BaseComponent {
   }
 }
 
+const loginButtonStyle = {
+  margin: 20
+};
+
+export class LoginComponent extends BaseComponent {
+
+  render() {
+
+
+    return <div>
+      <h4>Login with:</h4>
+
+      <FloatingActionButton mini={true} secondary={true} style={loginButtonStyle}>
+        <i className="fa fa-facebook"></i>
+      </FloatingActionButton>
+
+      <br/>
+      <br/>
+
+      <FloatingActionButton mini={true} secondary={true} style={loginButtonStyle}>
+        <i className="fa fa-linkedin"></i>
+      </FloatingActionButton>
+
+    </div>;
+  }
+}
+
+
 export class ProfileComponent extends BaseComponent {
 
   handleSelect(suggestion) {
@@ -72,12 +102,19 @@ export class ProfileComponent extends BaseComponent {
 
   render() {
 
+    let content;
 
-    return <div className="content-container">
+    if (this.request.user) {
+      content = <ProfileTabs />;
+    } else {
+      content = <LoginComponent />;
+    }
 
-      <h2>{ this.i18n.gettext('Profile')}</h2>
-
-      <ProfileTabs />
+    return <div>
+      <div>
+        <i className="fa fa-user fa-3x"></i>
+      </div>
+      {content}
 
     </div>;
   }

@@ -31,7 +31,7 @@ class ResultsView extends BaseComponent {
         <GridList
           cellHeight={300}
           style={styles.gridList}
-          cols={3}
+          cols={1}
           rows={1}
         >
           {this.props.userSkills.map(user => <GridTile
@@ -174,8 +174,11 @@ export class SearchComponent extends BaseComponent {
   render() {
 
 
-    return <div className="content-container">
-      <h2>{ this.i18n.gettext('Search')}</h2>
+    return <div>
+
+      <div className="component-icon">
+        <i className="fa fa-search fa-3x"></i>
+      </div>
       <div className="search-input">
         <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect.bind(this) }/>
       </div>

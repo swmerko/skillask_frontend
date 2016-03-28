@@ -1,7 +1,9 @@
 import React from 'react';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-import { BaseLayoutView } from 'outlinejs/lib/views';
+import { BaseLayoutView, BaseView } from 'outlinejs/lib/views';
 
+import { Grid, Row, Col } from 'react-flexgrid';
 import getMuiTheme from 'material-ui/lib/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/lib/MuiThemeProvider';
 import Colors from 'material-ui/lib/styles/colors';
@@ -39,21 +41,30 @@ const muiTheme = getMuiTheme({
 
 export class LayoutView extends BaseLayoutView {
   render() {
-    return <div className="wrap">
-      <div className="mainContent">{this.renderContent()}</div>
-    </div>;
+    return <div className='wrap'>{this.renderContent()}</div>;
   }
 }
 
 export class MaterialLayoutView extends BaseLayoutView {
 
+  goToHome() {
+    this.response.navigate('home:main');
+  }
+
   render() {
+
+    let headerLogo = this.props.contentProps.isHome ? '/static/core/media/images/skillaskLogo.png' : '/static/core/media/images/skillaskLogoLite.png';
     return <MuiThemeProvider muiTheme={muiTheme}>
-      <div className="wrap" style={styles.container}>
-
-        <div className="mainContent">{this.renderContent()}</div>
-
-      </div>
+      <Grid>
+        <Row className="center-xs">
+          <Col xs={12}>
+            <div className="box">
+              <img src={headerLogo} onClick={this.goToHome.bind(this)}/>
+            </div>
+          </Col>
+        </Row>
+          {this.renderContent()}
+      </Grid>
     </MuiThemeProvider>;
   }
 }
