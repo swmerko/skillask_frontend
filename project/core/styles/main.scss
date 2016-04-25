@@ -2,12 +2,20 @@
 @import '../../../node_modules/flexboxgrid/dist/flexboxgrid';
 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900');
 
+// google material design lite
+@import "../../../node_modules/material-design-lite/src/material-design-lite";
+@import "../../../node_modules/material-design-lite/src/material-design-lite-grid";
+@import "../../../node_modules/material-design-lite/src/styleguide";
+@import "../../../node_modules/material-design-lite/src/template";
+
 // font-awesome
 $fa-font-path: "/static/vendor-fonts/font-awesome/fonts/";
 @import '../../../node_modules/font-awesome/scss/font-awesome.scss';
 
 // animation
 @import "animate.min";
+
+@import "layout";
 
 body {
   //background-color: #CDDC39;

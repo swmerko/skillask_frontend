@@ -3,50 +3,43 @@ import React from 'react';
 import { BaseComponent } from 'outlinejs/lib/components';
 
 import Autosuggest from 'react-autosuggest';
-import GridList from 'material-ui/lib/grid-list/grid-list';
-import GridTile from 'material-ui/lib/grid-list/grid-tile';
-import StarBorder from 'material-ui/lib/svg-icons/toggle/star-border';
-import IconButton from 'material-ui/lib/icon-button';
 
 import { SkillCollection } from '../skills/managers';
 
-
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around'
-  },
-  gridList: {
-    overflowY: 'auto',
-    margin: 30
+class UserCardResult extends BaseComponent {
+  render() {
+    return <div className="search-result-card mdl-card mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-shadow--2dp">
+      <figure className="mdl-card__media">
+        <img src={this.props.user.userProfileImageUrl} alt={this.props.user.userFullName}/>
+      </figure>
+      <div className="mdl-card__title">
+        <h1 className="mdl-card__title-text">{this.props.user.userFullName}</h1>
+      </div>
+      <div className="mdl-card__supporting-text">
+        <p>{this.props.user.skillName}</p>
+      </div>
+      <div className="mdl-card__actions mdl-card--border">
+        <a className="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Read More</a>
+        <div className="mdl-layout-spacer"></div>
+        <button className="mdl-button mdl-button--icon mdl-button--colored"><i className="material-icons">favorite</i></button>
+        <button className="mdl-button mdl-button--icon mdl-button--colored"><i className="material-icons">share</i></button>
+      </div>
+    </div>;
   }
-};
+}
+
 
 class ResultsView extends BaseComponent {
   render() {
     var results;
     if (this.props.userSkills && this.props.userSkills.length > 0) {
-      results = <div style={styles.root}>
-        <GridList
-          cellHeight={300}
-          style={styles.gridList}
-          cols={1}
-          rows={1}
-        >
-          {this.props.userSkills.map(user => <GridTile
-              key={user.id}
-              title={user.skillName}
-              subtitle={<span>by <b>{user.userFullName}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-            >
-              <img src={user.userProfileImageUrl}/>
-            </GridTile>
-          )}
-        </GridList>
+      results = <div className="mdl-grid">
+        {this.props.userSkills.map(user => {
+          return <UserCardResult user={user} key={user.id}/>;
+        })}
       </div>;
     } else {
-      results = <h1>Nessun risultato</h1>;
+      results = <h2>Nessun risultato</h2>;
     }
 
     return results;
@@ -176,9 +169,11 @@ export class SearchComponent extends BaseComponent {
 
     return <div>
 
-      <div className="component-icon">
-        <i className="fa fa-search fa-3x"></i>
+
+      <div className="base-nav-icons">
+        <img src="/static/core/media/images/searchIcon.png"/>
       </div>
+
       <div className="search-input">
         <SearchInputView delegate={ this.delegate } handleSelect={ this.handleSelect.bind(this) }/>
       </div>
