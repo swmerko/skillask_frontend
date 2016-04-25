@@ -111,9 +111,11 @@ export class ProfileComponent extends BaseComponent {
     }
 
     return <div>
-      <div>
-        <i className="fa fa-user fa-3x"></i>
+
+      <div className="base-nav-icons">
+        <img src="/static/core/media/images/profileIcon.png"/>
       </div>
+
       {content}
 
     </div>;
