@@ -30,7 +30,7 @@ export default class {
         let newUrl = request.absoluteUrl.replace(/&token=[^&]+/, '').replace(/\?token=[^&]+/, '');
         response.navigate(newUrl);
 
-      } // else {
+      } else {
         //var oauthClient = new OAuth2(request.absoluteUrl.replace(/&code=[^&]+/, '').replace(/\?code=[^&]+/, ''));
         ////check if code parameter is present
         //var code = request.query.code;
@@ -38,18 +38,19 @@ export default class {
         //  let token = await oauthClient.tokenByCode(request);
         //  OAuth2.saveToken(token);
         //}
-        //
-        ////try to load user / token from local storage
-        //if (!request.user) {
-        //  let storedUser = localStorage.getItem('__user');
-        //  if (storedUser) {
-        //    request.user = JSON.parse(storedUser);
-        //    return;
-        //  }
-        //  //user not stored, try to get it using token
-        //  let token = OAuth2.loadToken();
-        //  request.user = await this.setUserByToken(token);
-        // }
+
+        //try to load user / token from local storage
+        if (!request.user) {
+          let storedUser = localStorage.getItem('__user');
+          if (storedUser) {
+            request.user = JSON.parse(storedUser);
+            return;
+          }
+          //user not stored, try to get it using token
+          let token = OAuth2.loadToken();
+          request.user = await this.setUserByToken(token);
+        }
+      }
     }
   }
 }

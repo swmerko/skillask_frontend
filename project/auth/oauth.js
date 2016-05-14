@@ -8,13 +8,13 @@ import { backboneSync } from 'outlinejs/lib/utils/patches/backbone';
 export default class OAuth2 {
   constructor(redirectUri, clientId = settings.OAUTH2_CLIENT_ID, clientSecret = settings.OAUTH2_CLIENT_SECRET, tokenUrl = settings.OAUTH2_TOKEN_URL, authorizeUrl = settings.OAUTH2_AUTHORIZE_URL) {
     this._redirectUri = redirectUri;
-    this._oauth2Client = new (require('client-oauth2'))({
-      clientId: clientId,
-      clientSecret: clientSecret,
-      accessTokenUri: tokenUrl,
-      authorizationUri: authorizeUrl,
-      redirectUri: this._redirectUri
-    });
+    //this._oauth2Client = new (require('client-oauth2'))({
+    //  clientId: clientId,
+    //  clientSecret: clientSecret,
+    //  accessTokenUri: tokenUrl,
+    //  authorizationUri: authorizeUrl,
+    //  redirectUri: this._redirectUri
+    //});
   }
 
   authorizationCodeGrant(response) {
@@ -29,7 +29,7 @@ export default class OAuth2 {
 
   static saveToken(token) {
     //TODO: map other token props (the real token is not serializable ;()
-    localStorage.setItem('__authToken', JSON.stringify({ accessToken: token.accessToken }));
+    localStorage.setItem('__authToken', JSON.stringify({accessToken: token.accessToken}));
   }
 
   static loadToken() {

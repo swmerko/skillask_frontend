@@ -3,6 +3,7 @@ import AlloAppRouter from './allo-app/urls';
 import HomeRouter from './home/urls';
 import SearchRouter from './search/urls';
 import ProfileRouter from './profile/urls';
+import AuthRouter from './auth/urls';
 
 export default class extends BaseRouter {
   get urlPatterns() {
@@ -10,7 +11,8 @@ export default class extends BaseRouter {
       '': include(HomeRouter),
       allo: include(AlloAppRouter),
       search: include(SearchRouter),
-      profile: include(ProfileRouter)
+      profile: include(ProfileRouter),
+      auth: include(AuthRouter)
     };
   }
 }

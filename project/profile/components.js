@@ -4,11 +4,10 @@
 import React from 'react';
 
 import { BaseComponent } from 'outlinejs/lib/components';
+import { settings } from 'outlinejs/lib/contexts';
 
-import { Grid, Row, Col } from 'react-flexgrid';
 import Tabs from 'material-ui/lib/tabs/tabs';
 import Tab from 'material-ui/lib/tabs/tab';
-import FloatingActionButton from 'material-ui/lib/floating-action-button';
 
 
 const styles = {
@@ -66,11 +65,11 @@ export class ProfileTabs extends BaseComponent {
   }
 }
 
-const loginButtonStyle = {
-  margin: 20
-};
-
 export class LoginComponent extends BaseComponent {
+
+  login(backend) {
+    this.response.navigate('auth:loginBackend', {backend: backend});
+  }
 
   render() {
 
@@ -78,17 +77,19 @@ export class LoginComponent extends BaseComponent {
     return <div>
       <h4>Login with:</h4>
 
-      <FloatingActionButton mini={true} secondary={true} style={loginButtonStyle}>
+      <button className="mdl-button mdl-js-button mdl-button--fab"
+              onClick={this.login.bind(this, settings.FACEBOOK_BACKEND)}>
         <i className="fa fa-facebook"></i>
-      </FloatingActionButton>
+      </button>
 
       <br/>
       <br/>
 
-      <FloatingActionButton mini={true} secondary={true} style={loginButtonStyle}>
+
+      <button className="mdl-button mdl-js-button mdl-button--fab"
+              onClick={this.login.bind(this, settings.LINKEDIN_BACKEND)}>
         <i className="fa fa-linkedin"></i>
-      </FloatingActionButton>
-
+      </button>
     </div>;
   }
 }
