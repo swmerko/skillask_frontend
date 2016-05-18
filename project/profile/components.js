@@ -6,22 +6,6 @@ import React from 'react';
 import { BaseComponent } from 'outlinejs/lib/components';
 import { settings } from 'outlinejs/lib/contexts';
 
-import Tabs from 'material-ui/lib/tabs/tabs';
-import Tab from 'material-ui/lib/tabs/tab';
-
-
-const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400
-  },
-  slide: {
-    padding: 10
-  }
-};
-
 export class ProfileTabs extends BaseComponent {
 
   constructor(props) {
@@ -38,30 +22,39 @@ export class ProfileTabs extends BaseComponent {
   }
 
   render() {
-    return (
-      <Tabs value={this.state.value} onChange={this.handleChange.bind(this)}>
-        <Tab label="Brain" icon={<i className="fa fa-eye"></i>} value="a">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab A</h2>
-            <p>
-              Tabs are also controllable if you want to programmatically pass them their values.
-              This allows for more functionality in Tabs such as not
-              having any Tab selected or assigning them different values.<i className="fa fa-eye"></i>
-            </p>
-          </div>
-        </Tab>
-        <Tab label="Tab B" value="b">
-          <div>
-            <h2 style={styles.headline}>Controllable Tab B</h2>
-            <p>
-              This is another example of a controllable tab. Remember, if you
-              use controllable Tabs, you need to give all of your tabs values or else
-              you wont be able to select them.
-            </p>
-          </div>
-        </Tab>
-      </Tabs>
-    );
+    return <div className="mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
+      <div className="mdl-tabs__tab-bar">
+        <a href="#starks-panel" className="mdl-tabs__tab is-active">Starks</a>
+        <a href="#lannisters-panel" className="mdl-tabs__tab">Lannisters</a>
+        <a href="#targaryens-panel" className="mdl-tabs__tab">Targaryens</a>
+      </div>
+
+      <div className="mdl-tabs__panel is-active" id="starks-panel">
+        <ul>
+          <li>Eddard</li>
+          <li>Catelyn</li>
+          <li>Robb</li>
+          <li>Sansa</li>
+          <li>Brandon</li>
+          <li>Arya</li>
+          <li>Rickon</li>
+        </ul>
+      </div>
+      <div className="mdl-tabs__panel" id="lannisters-panel">
+        <ul>
+          <li>Tywin</li>
+          <li>Cersei</li>
+          <li>Jamie</li>
+          <li>Tyrion</li>
+        </ul>
+      </div>
+      <div className="mdl-tabs__panel" id="targaryens-panel">
+        <ul>
+          <li>Viserys</li>
+          <li>Daenerys</li>
+        </ul>
+      </div>
+    </div>;
   }
 }
 
