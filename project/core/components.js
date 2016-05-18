@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import {runtime} from 'outlinejs/lib/contexts';
 
 import { BaseComponent } from 'outlinejs/lib/components';
 
@@ -12,6 +12,13 @@ import { Row, Col } from 'react-flexgrid';
 
 
 export class ReactCSSTransitionGroupComponent extends BaseComponent {
+
+  constructor() {
+    super();
+    if (runtime.isClient) {
+      require('material');
+    }
+  }
 
   outAnimation(focus) {
     let leftContainer = ReactDOM.findDOMNode(this.refs.leftContainer);
