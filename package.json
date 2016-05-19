@@ -32,7 +32,8 @@
     "immutable": "^3.7.6",
     "react-addons-css-transition-group": "^0.14.7",
     "material-design-lite": "^1.1.3",
-    "material-design-icons": "^2.2.3"
+    "material-design-icons": "^2.2.3",
+    "react-mdl": "1.5.4"
   },
   "browserify": {
     "transform": [
@@ -41,8 +42,8 @@
     ]
   },
   "browser": {
-    "material": "./node_modules/material-design-lite/material.min.js",
-    "jquery": "./node_modules/jquery/dist/jquery.js"
+    "material": "./node_modules/material-design-lite/material.js",
+    "jquery": "./node_modules/jquery/dist/jquery.min.js"
   },
   "browserify-shim": {
     "jquery": "jQuery",

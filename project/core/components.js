@@ -3,21 +3,15 @@
  */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {runtime} from 'outlinejs/lib/contexts';
+import {BaseComponent} from 'outlinejs/lib/components';
 
-import { BaseComponent } from 'outlinejs/lib/components';
-
-import jQuery from 'jquery';
-import { Row, Col } from 'react-flexgrid';
+import {Row, Col} from 'react-flexgrid';
 
 
 export class ReactCSSTransitionGroupComponent extends BaseComponent {
 
   constructor() {
     super();
-    if (runtime.isClient) {
-      require('material');
-    }
   }
 
   outAnimation(focus) {
