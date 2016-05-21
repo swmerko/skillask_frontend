@@ -29,9 +29,14 @@ export class ProfileContoller extends BaseLayoutController {
     };
   }
 
-  //addSkillToUser(skillId) {
-  //  skill =
-  //}
+  addSkillToUser(skillId) {
+    let userSkill = new UserSkill({
+      skill: skillId,
+      user: this.request.user.id
+    });
+    userSkill.save();
+    console.log('skill added to user', skillId, 'user', this.request.user.id);
+  }
 
 
   async getUserSkillSuggestions() {
@@ -42,7 +47,6 @@ export class ProfileContoller extends BaseLayoutController {
       userSkillSuggestions[category] = await skills.filterByCategory(category);
     }
     this.userSkillSuggestions = userSkillSuggestions;
-    console.log('seconda render', userSkillSuggestions);
     this.render(this.context);
 
   }

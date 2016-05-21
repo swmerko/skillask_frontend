@@ -10,9 +10,13 @@ import {Tabs, Tab} from 'react-mdl';
 
 export class SuggestionList extends BaseComponent {
 
+  handleClick(skillId) {
+    this.props.delegate.addSkillToUser(skillId);
+  }
+
   render() {
     let items = this.props.skills.map((skill) => {
-      return <li key={skill.id}>{skill.name}</li>;
+      return <li key={skill.id} onClick={this.handleClick.bind(this, skill.id)}>{skill.name}</li>;
     });
     return <section>
       <div className="content">
@@ -43,9 +47,9 @@ export class ProfileTabs extends BaseComponent {
       return <Tab key={category}>{category}</Tab>;
     });
     let activeContent = '';
-    console.log('active cat', this.state.activeTab + 1);
     if (Object.keys(this.props.suggestions).length > 0) {
-      activeContent = <SuggestionList skills={this.props.suggestions[this.state.activeTab + 1]}/>;
+      activeContent =
+        <SuggestionList delegate={this.props.delegate} skills={this.props.suggestions[this.state.activeTab + 1]}/>;
     }
 
     return <div>
@@ -98,7 +102,7 @@ export class ProfileComponent extends BaseComponent {
     let content;
 
     if (this.request.user) {
-      content = <ProfileTabs suggestions={this.props.userSkillSuggestions}/>;
+      content = <ProfileTabs delegate={this.props.delegate} suggestions={this.props.userSkillSuggestions}/>;
     } else {
       content = <LoginComponent />;
     }

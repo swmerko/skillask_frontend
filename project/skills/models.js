@@ -19,17 +19,25 @@ export class UserSkill extends BaseModel {
     return this.get('id');
   }
 
-  get skillId() {
-    return this.get('skill_id');
+  get skill() {
+    return this.get('skill');
   }
+
+  //set skill(value) {
+  //  return this.set('skill', value);
+  //}
 
   get skillName() {
     return this.get('skill_name');
   }
 
-  get userId() {
-    return this.get('user_id');
+  get user() {
+    return this.get('user');
   }
+
+  //set userId(value) {
+  //  return this.set('user', value);
+  //}
 
   get userEmail() {
     return this.get('user_email');
