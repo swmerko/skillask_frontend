@@ -8,11 +8,27 @@ import {settings} from 'outlinejs/lib/contexts';
 
 import {Tabs, Tab} from 'react-mdl';
 
+export class SuggestionList extends BaseComponent {
+
+  render() {
+    let items = this.props.skills.map((skill) => {
+      return <li key={skill.id}>{skill.name}</li>;
+    });
+    return <section>
+      <div className="content">
+        <ul>
+          {items}
+        </ul>
+      </div>
+    </section>;
+  }
+}
+
 export class ProfileTabs extends BaseComponent {
 
   constructor(props) {
     super(props);
-    this.state = {activeTab: 2, value: 'a'};
+    this.state = {activeTab: 1};
   }
 
   handleChange(value) {
@@ -22,17 +38,22 @@ export class ProfileTabs extends BaseComponent {
   }
 
   render() {
+
+    let tabs = Object.keys(this.props.suggestions).map((category) => {
+      return <Tab key={category}>{category}</Tab>;
+    });
+    let activeContent = '';
+    console.log('active cat', this.state.activeTab + 1);
+    if (Object.keys(this.props.suggestions).length > 0) {
+      activeContent = <SuggestionList skills={this.props.suggestions[this.state.activeTab + 1]}/>;
+    }
+
     return <div>
       <Tabs activeTab={this.state.activeTab} onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
-        <Tab>Starks</Tab>
-        <Tab>Lannisters</Tab>
-        <Tab>Targaryens</Tab>
+        {tabs}
       </Tabs>
-      <section>
-        <div className="content">Content for the tab: {this.state.activeTab}</div>
-      </section>
-    </div>
-      ;
+      {activeContent}
+    </div>;
   }
 }
 
@@ -77,7 +98,7 @@ export class ProfileComponent extends BaseComponent {
     let content;
 
     if (this.request.user) {
-      content = <ProfileTabs />;
+      content = <ProfileTabs suggestions={this.props.userSkillSuggestions}/>;
     } else {
       content = <LoginComponent />;
     }

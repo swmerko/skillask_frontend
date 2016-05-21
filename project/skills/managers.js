@@ -22,6 +22,10 @@ export class SkillCollection extends BaseCollection {
   filterBySkillName(skillName) {
     return this.fetch({data: {search: skillName}});
   }
+
+  filterByCategory(category) {
+    return this.fetch({data: {category: category}});
+  }
 }
 
 export class UserSkillCollection extends BaseCollection {

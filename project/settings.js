@@ -34,4 +34,10 @@ export default class extends BaseSettings {
   get LINKEDIN_LOGIN_URL() {
     return `${this.BACKEND_BASE_URL}login/${this.LINKEDIN_BACKEND}/`;
   }
+
+  // Skills
+
+  get SKILL_CATEGORIES() {
+    return ['1', '2', '3', '4'];
+  }
 }
