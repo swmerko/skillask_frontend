@@ -7,6 +7,8 @@ import {BaseComponent} from 'outlinejs/lib/components';
 
 import {Row, Col} from 'react-flexgrid';
 
+import jQuery from 'jquery';
+
 
 export class ReactCSSTransitionGroupComponent extends BaseComponent {
 
@@ -17,6 +19,7 @@ export class ReactCSSTransitionGroupComponent extends BaseComponent {
   outAnimation(focus) {
     let leftContainer = ReactDOM.findDOMNode(this.refs.leftContainer);
     let rightContainer = ReactDOM.findDOMNode(this.refs.rightContainer);
+
     jQuery(leftContainer).removeClass('col-xs-4');
     jQuery(leftContainer).removeClass('col-xs-6');
     jQuery(leftContainer).removeClass('col-xs-8');

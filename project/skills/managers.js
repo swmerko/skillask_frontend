@@ -24,7 +24,7 @@ export class SkillCollection extends BaseCollection {
   }
 
   filterByCategory(category, excludeTheirSkills = false) {
-    return this.fetch({data: {category: category, excludeTheirSkills:excludeTheirSkills}});
+    return this.fetch({data: {category: category, excludeTheirSkills: excludeTheirSkills}});
   }
 }
 

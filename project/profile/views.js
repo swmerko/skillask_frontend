@@ -1,9 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import { BaseView } from 'outlinejs/lib/views';
-
-import jQuery from 'jquery';
 
 import { AnimatedContent } from '../core/components';
 import { ProfileComponent } from './components';

@@ -2,8 +2,6 @@ import React from 'react';
 
 import { BaseView } from 'outlinejs/lib/views';
 
-import jQuery from 'jquery';
-
 import { SearchComponent } from './components';
 import { ProfileComponent } from '../profile/components';
 import { AnimatedContent } from '../core/components';
