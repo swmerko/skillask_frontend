@@ -31,8 +31,8 @@ export class SearchContentView extends BaseView {
 
 
   render() {
-    return <AnimatedContent leftChild={<SearchComponent delegate={ this.delegate } userSkills={this.props.userSkills}/>}
-                            rightChild={<ProfileComponent />}
+    return <AnimatedContent leftChild={<SearchComponent delegate={ this.delegate } {...this.props}/>}
+                            rightChild={<ProfileComponent delegate={ this.delegate } {...this.props}/>}
                             focus="left"/>;
   }
 }

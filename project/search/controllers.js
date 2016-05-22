@@ -1,4 +1,5 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
+import { runtime } from 'outlinejs/lib/contexts';
 
 import { MaterialLayoutView } from '../core/views';
 import { UserSkillCollection } from '../skills/managers';
@@ -21,22 +22,32 @@ export class SearchSkillContoller extends BaseLayoutController {
 
   get context() {
     return {
-      userSkills: this.userSkills
+      userSkills: this.userSkills,
+      userSkillSuggestions: this.userSkillSuggestions
     };
   }
 
-  init(skillId) {
+  async init(skillId) {
+
+    // initial context
+
+    this.userSkillSuggestions = {};
+    this.userSkills = [];
+
+    // global context
     if (skillId) {
       this.userSkills = new UserSkillCollection();
       this.searchBySkillId(skillId);
     } else {
-      let initialUserSkills = globalContext.context.get('userSkills');
-      if (initialUserSkills) {
-        this.userSkills = initialUserSkills;
-      } else {
-        this.userSkills = [];
+      if (runtime.isClient) {
+        this.userSkills = globalContext.context.get('userSkills', []);
       }
     }
+    // user skills suggestions
+    if (runtime.isClient) {
+      this.userSkillSuggestions = globalContext.context.get('userSkillSuggestions', {});
+    }
+
     this.render(this.context);
   }
 
@@ -45,10 +56,10 @@ export class SearchSkillContoller extends BaseLayoutController {
       let userSkillsResult = await this.userSkills.filterBySkillId(skillId);
       this.userSkills = userSkillsResult;
 
-      let newGlobalContext = globalContext.context.set('userSkills', userSkillsResult);
-
-      globalContext.context = newGlobalContext;
-
+      if (runtime.isClient) {
+        let newGlobalContext = globalContext.context.set('userSkills', userSkillsResult);
+        globalContext.context = newGlobalContext;
+      }
     } else {
       this.userSkills = [];
     }

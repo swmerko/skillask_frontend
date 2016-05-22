@@ -28,7 +28,7 @@ export class UserSkill extends BaseModel {
   //}
 
   get skillName() {
-    return this.get('skill_name');
+    return this.get('skillName');
   }
 
   get user() {
@@ -40,15 +40,15 @@ export class UserSkill extends BaseModel {
   //}
 
   get userEmail() {
-    return this.get('user_email');
+    return this.get('userEmail');
   }
 
   get userFullName() {
-    return this.get('user_full_name');
+    return this.get('userFullName');
   }
 
   get userProfileImageUrl() {
-    return this.get('user_profile_image_url');
+    return this.get('userProfileImageUrl');
   }
 
   get urlRoot() {

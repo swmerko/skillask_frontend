@@ -1,5 +1,5 @@
 import { BaseLayoutController } from 'outlinejs/lib/controllers';
-import {settings} from 'outlinejs/lib/contexts';
+import {settings, runtime} from 'outlinejs/lib/contexts';
 
 import { MaterialLayoutView } from '../core/views';
 
@@ -44,9 +44,16 @@ export class ProfileContoller extends BaseLayoutController {
 
     for (var category of settings.SKILL_CATEGORIES) {
       let skills = new SkillCollection();
-      userSkillSuggestions[category] = await skills.filterByCategory(category);
+      userSkillSuggestions[category] = await skills.filterByCategory(category, true);
     }
     this.userSkillSuggestions = userSkillSuggestions;
+
+    // update global
+
+    if (runtime.isClient) {
+      let newGlobalContext = globalContext.context.set('userSkillSuggestions', userSkillSuggestions);
+      globalContext.context = newGlobalContext;
+    }
     this.render(this.context);
 
   }
@@ -69,9 +76,9 @@ export class ProfileContoller extends BaseLayoutController {
     }
 
     // user userSkillSuggestions
-    if (this.request.user) {
-      if (globalContextObject.userSkillSuggestions) {
-        this.userSkillSuggestions = globalContextObject.userSkillSuggestions;
+    if (this.request.user && runtime.isClient) {
+      if (globalContext.context.get('userSkillSuggestions', false)) {
+        this.userSkillSuggestions = globalContext.context.get('userSkillSuggestions', {});
       } else {
         this.getUserSkillSuggestions();
       }
