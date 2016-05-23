@@ -12,6 +12,10 @@ export class Skill extends BaseModel {
   get slug() {
     return this.get('slug');
   }
+
+  get category() {
+    return this.get('category');
+  }
 }
 
 export class UserSkill extends BaseModel {

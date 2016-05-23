@@ -6,6 +6,8 @@ import { MaterialLayoutView } from '../core/views';
 import { globalContext } from '../global';
 import { SkillCollection } from '../skills/managers';
 import { UserSkill } from '../skills/models';
+import { GuiNotifications } from '../core/notifications';
+
 
 import { ProfileContentView } from './views';
 
@@ -29,22 +31,32 @@ export class ProfileContoller extends BaseLayoutController {
     };
   }
 
-  addSkillToUser(skillId) {
+  async addSkillToUser(skill) {
     let userSkill = new UserSkill({
-      skill: skillId,
+      skill: skill.id,
       user: this.request.user.id
     });
-    userSkill.save();
-    console.log('skill added to user', skillId, 'user', this.request.user.id);
+    try {
+      await userSkill.save();
+      this.userSkillSuggestions[skill.category] = await this.getSkillSuggestion(skill.category);
+      GuiNotifications.snackBar(`We added ${skill.name} to your profile!`);
+      this.render(this.context);
+    } catch (err) {
+      GuiNotifications.snackBar('Ops! Something went wrong!');
+    }
   }
 
+  async getSkillSuggestion(category) {
+    let skills = new SkillCollection();
+    let result = await skills.filterByCategory(category, true);
+    return result;
+  }
 
   async getUserSkillSuggestions() {
     let userSkillSuggestions = {};
 
     for (var category of settings.SKILL_CATEGORIES) {
-      let skills = new SkillCollection();
-      userSkillSuggestions[category] = await skills.filterByCategory(category, true);
+      userSkillSuggestions[category] = await this.getSkillSuggestion(category);
     }
     this.userSkillSuggestions = userSkillSuggestions;
 

@@ -6,23 +6,25 @@ import React from 'react';
 import {BaseComponent} from 'outlinejs/lib/components';
 import {settings} from 'outlinejs/lib/contexts';
 
-import {Tabs, Tab} from 'react-mdl';
+import {Tabs, Tab, ListItem, List, ListItemContent} from 'react-mdl';
 
 export class SuggestionList extends BaseComponent {
 
-  handleClick(skillId) {
-    this.props.delegate.addSkillToUser(skillId);
+  handleClick(skill) {
+    this.props.delegate.addSkillToUser(skill);
   }
 
   render() {
     let items = this.props.skills.map((skill) => {
-      return <li key={skill.id} onClick={this.handleClick.bind(this, skill.id)}>{skill.name}</li>;
+      return <ListItem key={skill.id} onClick={this.handleClick.bind(this, skill)}>
+          <ListItemContent><i className="fa fa-bug fa-2"></i> {skill.name}</ListItemContent>
+      </ListItem>;
     });
     return <section>
       <div className="content">
-        <ul>
+        <List>
           {items}
-        </ul>
+        </List>
       </div>
     </section>;
   }
@@ -32,7 +34,7 @@ export class ProfileTabs extends BaseComponent {
 
   constructor(props) {
     super(props);
-    this.state = {activeTab: 1};
+    this.state = {activeTab: 0};
   }
 
   handleChange(value) {
@@ -68,7 +70,6 @@ export class LoginComponent extends BaseComponent {
   }
 
   render() {
-
 
     return <div>
       <h4>Login with:</h4>
