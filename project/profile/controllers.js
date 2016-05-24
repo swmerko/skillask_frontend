@@ -39,16 +39,22 @@ export class ProfileContoller extends BaseLayoutController {
     try {
       await userSkill.save();
       this.userSkillSuggestions[skill.category] = await this.getSkillSuggestion(skill.category);
-      GuiNotifications.snackBar(`We added ${skill.name} to your profile!`);
       this.render(this.context);
+      GuiNotifications.snackBar(`We added ${skill.name} to your profile!`);
     } catch (err) {
       GuiNotifications.snackBar('Ops! Something went wrong!');
+      console.log(err);
     }
   }
 
   async getSkillSuggestion(category) {
-    let skills = new SkillCollection();
-    let result = await skills.filterByCategory(category, true);
+    let result = []
+    if (category) {
+      let skills = new SkillCollection();
+      result = await skills.filterByCategory(category, true);
+    } else {
+      console.log('Pass a category to getSkillSuggestion');
+    }
     return result;
   }
 

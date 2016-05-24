@@ -19,8 +19,8 @@ export class SkillCollection extends BaseCollection {
     return response.results;
   }
 
-  filterBySkillName(skillName) {
-    return this.fetch({data: {search: skillName}});
+  filterBySkillName(skillName, excludeTheirSkills = false) {
+    return this.fetch({data: {search: skillName, excludeTheirSkills: excludeTheirSkills}});
   }
 
   filterByCategory(category, excludeTheirSkills = false) {

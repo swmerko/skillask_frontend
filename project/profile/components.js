@@ -8,6 +8,8 @@ import {settings} from 'outlinejs/lib/contexts';
 
 import {Tabs, Tab, ListItem, List, ListItemContent} from 'react-mdl';
 
+import {SearchSkillInputView} from '../search/autosuggestions';
+
 export class SuggestionList extends BaseComponent {
 
   handleClick(skill) {
@@ -17,7 +19,7 @@ export class SuggestionList extends BaseComponent {
   render() {
     let items = this.props.skills.map((skill) => {
       return <ListItem key={skill.id} onClick={this.handleClick.bind(this, skill)}>
-          <ListItemContent><i className="fa fa-bug fa-2"></i> {skill.name}</ListItemContent>
+        <ListItemContent><i className="fa fa-bug fa-2"></i> {skill.name}</ListItemContent>
       </ListItem>;
     });
     return <section>
@@ -94,8 +96,8 @@ export class LoginComponent extends BaseComponent {
 
 export class ProfileComponent extends BaseComponent {
 
-  handleSelect(suggestion) {
-    this.response.navigate('search:skill', {skillId: suggestion.id});
+  handleSelect(skill) {
+    this.props.delegate.addSkillToUser(skill);
   }
 
   render() {
@@ -103,7 +105,16 @@ export class ProfileComponent extends BaseComponent {
     let content;
 
     if (this.request.user) {
-      content = <ProfileTabs delegate={this.props.delegate} suggestions={this.props.userSkillSuggestions}/>;
+      content = <div>
+        <div className="search-input">
+          <SearchSkillInputView delegate={ this.delegate }
+                                handleSelect={ this.handleSelect.bind(this)}
+                                placeholder={'Search some skill for your profile'}
+                                excludeTheirSkills={true}/>
+        </div>
+        <hr/>
+        <ProfileTabs delegate={this.props.delegate} suggestions={this.props.userSkillSuggestions}/>
+      </div>;
     } else {
       content = <LoginComponent />;
     }
