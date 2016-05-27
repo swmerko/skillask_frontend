@@ -20,35 +20,34 @@ export class MaterialLayoutView extends BaseLayoutView {
     this.state = {
       showSnackBar: false,
       textSnackBar: '',
-      showToast: false,
-      textToast: ''
+      actionLabelSnackBar: '',
+      actionFunctionSnackbar: null
     };
   }
 
   componentDidMount() {
     let snackBarEvent = GuiNotifications.snackBarEvent;
-    let toastEvent = GuiNotifications.toastEvent;
 
-    defaultCenter.on(snackBarEvent, (text) => {
-      this.showSnackBar(text);
-    });
-
-    defaultCenter.on(toastEvent, (text) => {
-      this.showToast(text);
+    defaultCenter.on(snackBarEvent, (text, actionLabel, actionFunction) => {
+      this.showSnackBar(text, actionLabel, actionFunction);
     });
   }
 
-  showSnackBar(text) {
+  showSnackBar(text, actionLabel, actionFunction) {
     this.setState({
       showSnackBar: true,
-      textSnackBar: text
+      textSnackBar: text,
+      actionLabelSnackBar: actionLabel,
+      actionFunctionSnackbar: actionFunction
     });
   }
 
   closeSnackBar() {
     this.setState({
       showSnackBar: false,
-      textSnackBar: ''
+      textSnackBar: '',
+      actionLabelSnackBar: '',
+      actionFunctionSnackbar: null
     });
   }
 
@@ -58,7 +57,27 @@ export class MaterialLayoutView extends BaseLayoutView {
   }
 
   render() {
-    const { showToast, showSnackBar, textSnackBar, textToast} = this.state;
+    const {showSnackBar, textSnackBar, actionLabelSnackBar, actionFunctionSnackbar } = this.state;
+
+    let snackbar;
+
+    if (actionLabelSnackBar && typeof actionFunctionSnackbar === 'function') {
+      snackbar = <Snackbar timeout={3750}
+                           active={showSnackBar}
+                           onTimeout={this.closeSnackBar.bind(this)}
+                           onClick={actionFunctionSnackbar.bind(this)}
+                           action={actionLabelSnackBar}>
+        {textSnackBar}
+      </Snackbar>;
+    } else {
+      snackbar = <Snackbar timeout={2750}
+                           active={showSnackBar}
+                           onTimeout={this.closeSnackBar.bind(this)}>
+        {textSnackBar}
+      </Snackbar>;
+    }
+
+
     return <div className="mdl-layout mdl-js-layout mdl-layout--fixed-header">
       <header className="mdl-layout__header">
         <div className="mdl-layout__header-row">
@@ -88,11 +107,7 @@ export class MaterialLayoutView extends BaseLayoutView {
           </Grid>
         </div>
       </main>
-      <Snackbar active={showSnackBar} onTimeout={this.closeSnackBar.bind(this)}>
-        {textSnackBar}
-      </Snackbar>
-
-
+      {snackbar}
     </div>;
   }
 }

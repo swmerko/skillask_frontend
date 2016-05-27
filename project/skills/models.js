@@ -35,6 +35,10 @@ export class UserSkill extends BaseModel {
     return this.get('skillName');
   }
 
+  get skillCategory() {
+    return this.get('skillCategory');
+  }
+
   get user() {
     return this.get('user');
   }

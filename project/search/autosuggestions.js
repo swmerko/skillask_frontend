@@ -34,7 +34,12 @@ export class SearchSkillInputView extends BaseComponent {
       let skillSuggestions = await skillsSuggestionsCollection.filterBySkillName(skillName, this.props.excludeTheirSkills || false);
       let cleanedSkillSuggestions = [];
       skillSuggestions.forEach(function (suggestion) {
-        cleanedSkillSuggestions.push({id: suggestion.id, name: suggestion.name, category: suggestion.category, slug: suggestion.slug});
+        cleanedSkillSuggestions.push({
+          id: suggestion.id,
+          name: suggestion.name,
+          category: suggestion.category,
+          slug: suggestion.slug
+        });
       });
       return cleanedSkillSuggestions;
     } else {
@@ -78,7 +83,6 @@ export class SearchSkillInputView extends BaseComponent {
   onSuggestionsUpdateRequested({value}) {
     this.loadSuggestions(value);
   }
-
 
   getSuggestionValue(suggestion) {
     return suggestion.name;

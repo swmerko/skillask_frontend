@@ -7,8 +7,8 @@ export class GuiNotifications {
     return 'snackBar';
   }
 
-  static snackBar(text) {
-    defaultCenter.emit(this.snackBarEvent, text);
+  static snackBar(text, actionLabel, actionFunction) {
+    defaultCenter.emit(this.snackBarEvent, text, actionLabel, actionFunction);
   }
 
   static get toastEvent() {

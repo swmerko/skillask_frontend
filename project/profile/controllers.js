@@ -34,13 +34,29 @@ export class ProfileContoller extends BaseLayoutController {
   async addSkillToUser(skill) {
     let userSkill = new UserSkill({
       skill: skill.id,
-      user: this.request.user.id
+      user: this.request.user.id,
+      skillCategory: skill.category,
+      skillName: skill.name
     });
     try {
       await userSkill.save();
       this.userSkillSuggestions[skill.category] = await this.getSkillSuggestion(skill.category);
       this.render(this.context);
-      GuiNotifications.snackBar(`We added ${skill.name} to your profile!`);
+      GuiNotifications.snackBar(`We added ${skill.name} to your profile!`, 'Undo', this.removeSkillToUser.bind(this, userSkill));
+    } catch (err) {
+      GuiNotifications.snackBar('Ops! Something went wrong!');
+      console.log(err);
+    }
+  }
+
+  async removeSkillToUser(userSkill) {
+    try {
+      let skillCategory = userSkill.skillCategory;
+      let skillName = userSkill.skillName;
+      await userSkill.destroy({headers: {'content-type': 'application/json'}});
+      this.userSkillSuggestions[skillCategory] = await this.getSkillSuggestion(skillCategory);
+      this.render(this.context);
+      GuiNotifications.snackBar(`We removed ${skillName} to your profile!`);
     } catch (err) {
       GuiNotifications.snackBar('Ops! Something went wrong!');
       console.log(err);
@@ -48,7 +64,7 @@ export class ProfileContoller extends BaseLayoutController {
   }
 
   async getSkillSuggestion(category) {
-    let result = []
+    let result = [];
     if (category) {
       let skills = new SkillCollection();
       result = await skills.filterByCategory(category, true);
