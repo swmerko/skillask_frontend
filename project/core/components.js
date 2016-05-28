@@ -4,17 +4,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BaseComponent} from 'outlinejs/lib/components';
-
 import {Row, Col} from 'react-flexgrid';
-
 import jQuery from 'jquery';
 
 
 export class ReactCSSTransitionGroupComponent extends BaseComponent {
-
-  constructor() {
-    super();
-  }
 
   outAnimation(focus) {
     let leftContainer = ReactDOM.findDOMNode(this.refs.leftContainer);

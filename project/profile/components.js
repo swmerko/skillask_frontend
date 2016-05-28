@@ -2,12 +2,12 @@
  * Created by erko on 20/03/16.
  */
 import React from 'react';
-
 import {BaseComponent} from 'outlinejs/lib/components';
 import {settings} from 'outlinejs/lib/contexts';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import {List, ListItem} from 'material-ui/List';
 
-import {Tabs, Tab, ListItem, List, ListItemContent} from 'react-mdl';
-
+import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import {SearchSkillInputView} from '../search/autosuggestions';
 
 export class SuggestionList extends BaseComponent {
@@ -18,8 +18,7 @@ export class SuggestionList extends BaseComponent {
 
   render() {
     let items = this.props.skills.map((skill) => {
-      return <ListItem key={skill.id} onClick={this.handleClick.bind(this, skill)}>
-        <ListItemContent><i className="fa fa-bug fa-2"></i> {skill.name}</ListItemContent>
+      return <ListItem key={skill.id} onClick={this.handleClick.bind(this, skill)} primaryText={skill.name} leftIcon={<ContentInbox />}>
       </ListItem>;
     });
     return <section>
@@ -36,7 +35,9 @@ export class ProfileTabs extends BaseComponent {
 
   constructor(props) {
     super(props);
-    this.state = {activeTab: 0};
+    this.state = {
+      value: '1'
+    };
   }
 
   handleChange(value) {
@@ -48,19 +49,15 @@ export class ProfileTabs extends BaseComponent {
   render() {
 
     let tabs = Object.keys(this.props.suggestions).map((category) => {
-      return <Tab key={category}>{category}</Tab>;
+      return <Tab key={category} label={category} value={category}>
+        <SuggestionList delegate={this.props.delegate} skills={this.props.suggestions[category]}/>
+      </Tab>;
     });
-    let activeContent = '';
-    if (Object.keys(this.props.suggestions).length > 0) {
-      activeContent =
-        <SuggestionList delegate={this.props.delegate} skills={this.props.suggestions[this.state.activeTab + 1]}/>;
-    }
 
     return <div>
-      <Tabs activeTab={this.state.activeTab} onChange={(tabId) => this.setState({ activeTab: tabId })} ripple>
+      <Tabs value={this.state.value} onChange={this.handleChange.bind(this)}>
         {tabs}
       </Tabs>
-      {activeContent}
     </div>;
   }
 }
