@@ -9,11 +9,12 @@ $fa-font-path: "/static/vendor-fonts/font-awesome/fonts/";
 // animation
 @import "animate.min";
 
+@import "flexbox-grid";
 @import "layout";
 
 body {
   //background-color: #CDDC39;
-  background-color: #009688;
+  background-color: #FF6D00;
   font-family: 'Roboto', sans-serif;
 }
 

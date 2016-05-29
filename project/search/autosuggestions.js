@@ -1,10 +1,7 @@
 import React from 'react';
-
-import { BaseComponent } from 'outlinejs/lib/components';
-
+import {BaseComponent} from 'outlinejs/lib/components';
 import Autosuggest from 'react-autosuggest';
-
-import { SkillCollection } from '../skills/managers';
+import {SkillCollection} from '../skills/managers';
 
 
 export class SearchSkillInputView extends BaseComponent {
@@ -102,7 +99,7 @@ export class SearchSkillInputView extends BaseComponent {
   render() {
     let placeholder = this.props.placeholder || 'Search some skill';
 
-    const { value, suggestions, isLoading} = this.state;
+    const {value, suggestions, isLoading} = this.state;
     const inputProps = {
       placeholder: placeholder,
       value,

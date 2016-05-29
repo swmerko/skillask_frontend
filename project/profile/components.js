@@ -6,9 +6,10 @@ import {BaseComponent} from 'outlinejs/lib/components';
 import {settings} from 'outlinejs/lib/contexts';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import {List, ListItem} from 'material-ui/List';
-
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import {SearchSkillInputView} from '../search/autosuggestions';
+import RaisedButton from 'material-ui/RaisedButton';
+import {PaperComponent} from '../core/baseLayoutComponents';
 
 export class SuggestionList extends BaseComponent {
 
@@ -18,7 +19,8 @@ export class SuggestionList extends BaseComponent {
 
   render() {
     let items = this.props.skills.map((skill) => {
-      return <ListItem key={skill.id} onClick={this.handleClick.bind(this, skill)} primaryText={skill.name} leftIcon={<ContentInbox />}>
+      return <ListItem key={skill.id} onClick={this.handleClick.bind(this, skill)} primaryText={skill.name}
+                       leftIcon={<ContentInbox />}>
       </ListItem>;
     });
     return <section>
@@ -54,13 +56,17 @@ export class ProfileTabs extends BaseComponent {
       </Tab>;
     });
 
-    return <div>
+    return <PaperComponent>
       <Tabs value={this.state.value} onChange={this.handleChange.bind(this)}>
         {tabs}
       </Tabs>
-    </div>;
+    </PaperComponent>;
   }
 }
+
+const socialButtonStyle = {
+  margin: 20
+};
 
 export class LoginComponent extends BaseComponent {
 
@@ -71,21 +77,24 @@ export class LoginComponent extends BaseComponent {
   render() {
 
     return <div>
-      <h4>Login with:</h4>
 
-      <button className="mdl-button mdl-js-button mdl-button--fab"
-              onClick={this.login.bind(this, settings.FACEBOOK_BACKEND)}>
-        <i className="fa fa-facebook"></i>
-      </button>
+      <PaperComponent>
+        <h4>Login with:</h4>
 
-      <br/>
-      <br/>
+        <RaisedButton
+          onClick={this.login.bind(this, settings.FACEBOOK_BACKEND)}
+          backgroundColor="#a4c639"
+          icon={ <i className="fa fa-facebook"></i>}
+          style={socialButtonStyle}
+        />
 
-
-      <button className="mdl-button mdl-js-button mdl-button--fab"
-              onClick={this.login.bind(this, settings.LINKEDIN_BACKEND)}>
-        <i className="fa fa-linkedin"></i>
-      </button>
+        <RaisedButton
+          onClick={this.login.bind(this, settings.LINKEDIN_BACKEND)}
+          backgroundColor="#a4c639"
+          icon={<i className="fa fa-linkedin"></i>}
+          style={socialButtonStyle}
+        />
+      </PaperComponent>
     </div>;
   }
 }
@@ -103,12 +112,13 @@ export class ProfileComponent extends BaseComponent {
 
     if (this.request.user) {
       content = <div>
-        <div className="search-input">
+        <PaperComponent>
+          <h4>Search skill for your profile</h4>
           <SearchSkillInputView delegate={ this.delegate }
                                 handleSelect={ this.handleSelect.bind(this)}
                                 placeholder={'Search some skill for your profile'}
                                 excludeTheirSkills={true}/>
-        </div>
+        </PaperComponent>
         <hr/>
         <ProfileTabs delegate={this.props.delegate} suggestions={this.props.userSkillSuggestions}/>
       </div>;

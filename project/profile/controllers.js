@@ -1,15 +1,11 @@
-import { BaseLayoutController } from 'outlinejs/lib/controllers';
+import {BaseLayoutController} from 'outlinejs/lib/controllers';
 import {settings, runtime} from 'outlinejs/lib/contexts';
-
-import { MaterialLayoutView } from '../core/views';
-
-import { globalContext } from '../global';
-import { SkillCollection } from '../skills/managers';
-import { UserSkill } from '../skills/models';
-import { GuiNotifications } from '../core/notifications';
-
-
-import { ProfileContentView } from './views';
+import {MaterialLayoutView} from '../core/views';
+import {globalContext} from '../global';
+import {SkillCollection} from '../skills/managers';
+import {UserSkill} from '../skills/models';
+import {GuiNotifications} from '../core/notifications';
+import {ProfileContentView} from './views';
 
 export class ProfileContoller extends BaseLayoutController {
   static get loginRequired() {
@@ -27,7 +23,8 @@ export class ProfileContoller extends BaseLayoutController {
   get context() {
     return {
       userSkills: this.userSkills,
-      userSkillSuggestions: this.userSkillSuggestions
+      userSkillSuggestions: this.userSkillSuggestions,
+      skill: this.skill
     };
   }
 
@@ -95,8 +92,8 @@ export class ProfileContoller extends BaseLayoutController {
   init() {
 
     // initial context
-
     this.userSkillSuggestions = {};
+    this.skill = {};
     this.userSkills = [];
 
     // global context
@@ -116,6 +113,9 @@ export class ProfileContoller extends BaseLayoutController {
       } else {
         this.getUserSkillSuggestions();
       }
+    }
+    if (runtime.isClient) {
+      this.skill = globalContext.context.get('skill', {});
     }
     this.render(this.context);
   }

@@ -35,7 +35,6 @@ export class MaterialLayoutView extends BaseLayoutView {
 
   componentDidMount() {
     let snackBarEvent = GuiNotifications.snackBarEvent;
-
     defaultCenter.on(snackBarEvent, (text, actionLabel, actionFunction) => {
       this.showSnackBar(text, actionLabel, actionFunction);
     });
@@ -58,7 +57,6 @@ export class MaterialLayoutView extends BaseLayoutView {
       actionFunctionSnackbar: null
     });
   }
-
 
   goToHome() {
     this.response.navigate('home:main');
@@ -89,7 +87,7 @@ export class MaterialLayoutView extends BaseLayoutView {
 
     return <MuiThemeProvider muiTheme={muiTheme}>
       <div>
-        <Grid>
+        <Grid fluid={true}>
           {this.renderContent()}
         </Grid>
         {snackbar}
