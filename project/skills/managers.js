@@ -1,6 +1,5 @@
-import { BaseCollection } from 'outlinejs/lib/managers';
-import { UserSkill } from './models';
-import { Skill } from './models';
+import {BaseCollection} from 'outlinejs/lib/managers';
+import {UserSkill, Skill} from './models';
 
 export class SkillCollection extends BaseCollection {
   get url() {
@@ -20,11 +19,21 @@ export class SkillCollection extends BaseCollection {
   }
 
   filterBySkillName(skillName, excludeTheirSkills = false) {
-    return this.fetch({data: {search: skillName, excludeTheirSkills: excludeTheirSkills}});
+    return this.fetch({
+      data: {
+        search: skillName,
+        excludeTheirSkills: excludeTheirSkills
+      }
+    });
   }
 
   filterByCategory(category, excludeTheirSkills = false) {
-    return this.fetch({data: {category: category, excludeTheirSkills: excludeTheirSkills}});
+    return this.fetch({
+      data: {
+        category: category,
+        excludeTheirSkills: excludeTheirSkills
+      }
+    });
   }
 }
 
@@ -41,8 +50,13 @@ export class UserSkillCollection extends BaseCollection {
     return await this.fetch();
   }
 
-  async filterBySkillId(skillId) {
-    return await this.fetch({data: {skillId: skillId}});
+  async filterBySkillId(skillId, includeSupporters = false) {
+    return await this.fetch({
+      data: {
+        skillId: skillId,
+        includeSupporters: includeSupporters
+      }
+    });
   }
 
   parse(response) {

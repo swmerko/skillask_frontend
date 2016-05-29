@@ -52,7 +52,9 @@ export class SearchSkillContoller extends BaseLayoutController {
       });
       try {
         await supportUserSkill.save();
+        userSkill.supporters.push(this.request.user.id);
         GuiNotifications.snackBar(`Now you support ${userSkill.userFullName} in  ${userSkill.skillName}!`, 'Undo', this.unSupportUser.bind(this, supportUserSkill));
+        this.render(this.context);
         return true;
       } catch (err) {
         GuiNotifications.snackBar('Ops! Something went wrong!');
@@ -80,7 +82,7 @@ export class SearchSkillContoller extends BaseLayoutController {
   async searchBySkillId(skillId) {
     if (skillId) {
       await this.getSkill(skillId);
-      let userSkillsResult = await this.userSkills.filterBySkillId(skillId);
+      let userSkillsResult = await this.userSkills.filterBySkillId(skillId, true);
       this.userSkills = userSkillsResult;
 
       if (runtime.isClient) {
