@@ -24,6 +24,10 @@ export class UserSkillsResultsComponent extends BaseComponent {
     this.props.delegate.supportUser(userSkill);
   }
 
+  handleUnSupportUser(userSkill, supporter) {
+    this.props.delegate.unSupportUser(null, userSkill, supporter);
+  }
+
   render() {
 
     let results = this.props.userSkills.map(userSkill => {
@@ -32,7 +36,7 @@ export class UserSkillsResultsComponent extends BaseComponent {
       let star = '';
       if (this.request.user) {
         if (userSkill.supporters.indexOf(this.request.user.id) > -1) {
-          star = <IconButton>
+          star = <IconButton onClick={this.handleUnSupportUser.bind(this, userSkill, this.request.user.id)}>
             <Star color="orange"/>
           </IconButton>;
         } else {

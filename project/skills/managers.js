@@ -1,5 +1,5 @@
 import {BaseCollection} from 'outlinejs/lib/managers';
-import {UserSkill, Skill} from './models';
+import {UserSkill, Skill, SupportUserSkill} from './models';
 
 export class SkillCollection extends BaseCollection {
   get url() {
@@ -55,6 +55,34 @@ export class UserSkillCollection extends BaseCollection {
       data: {
         skillId: skillId,
         includeSupporters: includeSupporters
+      }
+    });
+  }
+
+  parse(response) {
+    return response.results;
+  }
+}
+
+
+export class SupportUserSkillCollection extends BaseCollection {
+  get url() {
+    return 'https://skillask.herokuapp.com/skills/api/support_user_skills/';
+  }
+
+  get model() {
+    return SupportUserSkill;
+  }
+
+  async all() {
+    return await this.fetch();
+  }
+
+  async filterBySupporterAndUserSkill(supporter, userSkill) {
+    return await this.fetch({
+      data: {
+        supporter: supporter,
+        userSkill: userSkill
       }
     });
   }
