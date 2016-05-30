@@ -21,7 +21,7 @@ const styles = {
 export class UserSkillsResultsComponent extends BaseComponent {
 
   handleSupportUser(userSkill) {
-    let result = this.props.delegate.supportUser(userSkill);
+    this.props.delegate.supportUser(userSkill);
   }
 
   render() {
