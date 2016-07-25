@@ -24,7 +24,8 @@ export class SearchSkillContoller extends BaseLayoutController {
     return {
       userSkills: this.userSkills,
       userSkillSuggestions: this.userSkillSuggestions,
-      skill: this.skill
+      skill: this.skill,
+      suggestionsEnabled: this.suggestionsEnabled
     };
   }
 
@@ -120,13 +121,18 @@ export class SearchSkillContoller extends BaseLayoutController {
     this.render(this.context);
   }
 
+  setSuggestionsEnabled(value) {
+    this.suggestionsEnabled = value;
+    this.render(this.context);
+  }
+
   async init(skillId) {
 
     // initial context
-
     this.userSkillSuggestions = {};
     this.userSkills = [];
     this.skill = new Skill();
+    this.suggestionsEnabled = false;
 
     // global context
     if (skillId) {

@@ -11,16 +11,17 @@ $fa-font-path: "/static/vendor-fonts/font-awesome/fonts/";
 
 @import "flexbox-grid";
 @import "layout";
+@import url('https://fonts.googleapis.com/css?family=Arvo|Scope+One');
 
-body {
-  //background-color: #CDDC39;
-  background-color: #FF6D00;
-  font-family: 'Roboto', sans-serif;
-}
+//body {
+//  //background-color: #CDDC39;
+//  background-color: #FF6D00;
+//  font-family: 'Scope One', sans-serif;
+//}
 
 .component-icon {
   margin: 15px;
-  color: white;
+  color: #FFF;
 }
 
 .transition-width-out {

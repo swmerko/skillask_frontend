@@ -24,8 +24,10 @@ export class ProfileContoller extends BaseLayoutController {
     return {
       userSkills: this.userSkills,
       userSkillSuggestions: this.userSkillSuggestions,
-      skill: this.skill
-    };
+      skill: this.skill,
+      suggestionsEnabled: this.suggestionsEnabled
+  }
+    ;
   }
 
   async addSkillToUser(skill) {
@@ -80,13 +82,16 @@ export class ProfileContoller extends BaseLayoutController {
     this.userSkillSuggestions = userSkillSuggestions;
 
     // update global
-
     if (runtime.isClient) {
       let newGlobalContext = globalContext.context.set('userSkillSuggestions', userSkillSuggestions);
       globalContext.context = newGlobalContext;
     }
     this.render(this.context);
+  }
 
+  setSuggestionsEnabled(value) {
+    this.suggestionsEnabled = value;
+    this.render(this.context);
   }
 
   init() {
@@ -95,6 +100,7 @@ export class ProfileContoller extends BaseLayoutController {
     this.userSkillSuggestions = {};
     this.skill = {};
     this.userSkills = [];
+    this.suggestionsEnabled = false;
 
     // global context
     let globalContextObject = globalContext.context.toObject();

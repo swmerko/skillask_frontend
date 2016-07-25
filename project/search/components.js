@@ -32,6 +32,8 @@ export class SearchComponent extends BaseComponent {
       searchResultTitle = `Results for ${this.props.skill.name}`;
     }
 
+    let hideResults = this.props.suggestionsEnabled ? 'hideWithOpacity' : '';
+
     return <div>
 
       <div className="base-nav-icons">
@@ -44,7 +46,7 @@ export class SearchComponent extends BaseComponent {
                               placeholder={ 'Search some skilled people' }/>
       </PaperComponent>
       <hr/>
-      <PaperComponent>
+      <PaperComponent className={hideResults}>
         <h4>{searchResultTitle}</h4>
         <ResultComponent delegate={ this.delegate } userSkills={ this.props.userSkills }/>
       </PaperComponent>

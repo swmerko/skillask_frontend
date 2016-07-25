@@ -13,7 +13,11 @@ const paperStyle = {
   width: '100%',
   padding: 20,
   textAlign: 'center',
-  display: 'inline-block'
+  display: 'inline-block',
+  backgroundColor: 'transparent',
+  border: 'solid white thin',
+  color: 'white',
+  fontWeight: 400
 };
 
 export class PaperComponent extends Paper {

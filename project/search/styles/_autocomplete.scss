@@ -20,8 +20,9 @@
   font-family: Helvetica, sans-serif;
   font-weight: 300;
   font-size: 20px;
-  color: #000;
+  color: #FFF;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .react-autosuggest__input::-moz-placeholder{
@@ -48,14 +49,11 @@
 
 .react-autosuggest__suggestions-container {
   position: absolute;
-  top: 41px;
+  top: 140px;
   width: 100%;
-  margin: 0;
-  padding: 0;
   list-style-type: none;
-  border: 1px solid #aaa;
-  background-color: #fff;
-  font-family: Helvetica, sans-serif;
+  background-color: transparent;
+  font-family: Roboto, sans-serif;
   font-weight: 300;
   font-size: 16px;
   color: #000;
@@ -66,7 +64,12 @@
 
 .react-autosuggest__suggestion {
   cursor: pointer;
-  padding: 10px 20px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  margin: 20px 0px;
+  border: solid white thin;
+  color: #FFFFFF;
 }
 
 .react-autosuggest__suggestion--focused {

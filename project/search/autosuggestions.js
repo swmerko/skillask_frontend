@@ -47,6 +47,8 @@ export class SearchSkillInputView extends BaseComponent {
   async loadSuggestions(value) {
     const cacheKey = value.trim().toLowerCase();
 
+    this.delegate.setSuggestionsEnabled(true);
+
     if (this.cache[cacheKey]) {
       this.setState({
         suggestions: this.cache[cacheKey]
@@ -63,6 +65,7 @@ export class SearchSkillInputView extends BaseComponent {
           isLoading: false,
           suggestions: skillsSuggestions
         });
+
       } else { // Ignore suggestions if input value changed
         this.setState({
           isLoading: false
@@ -75,6 +78,9 @@ export class SearchSkillInputView extends BaseComponent {
     this.setState({
       value: newValue
     });
+    if (!newValue) {
+      this.delegate.setSuggestionsEnabled(false);
+    }
   }
 
   onSuggestionsUpdateRequested({value}) {
@@ -94,6 +100,7 @@ export class SearchSkillInputView extends BaseComponent {
     this.setState({
       value: ''
     });
+    this.delegate.setSuggestionsEnabled(false);
   }
 
   render() {

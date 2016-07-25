@@ -11,6 +11,12 @@ import {SearchSkillInputView} from '../search/autosuggestions';
 import RaisedButton from 'material-ui/RaisedButton';
 import {PaperComponent} from '../core/baseLayoutComponents';
 
+const itemStyle = {
+  color: 'white',
+  fontWeight: 300,
+  fontSize: '20'
+};
+
 export class SuggestionList extends BaseComponent {
 
   handleClick(skill) {
@@ -20,7 +26,7 @@ export class SuggestionList extends BaseComponent {
   render() {
     let items = this.props.skills.map((skill) => {
       return <ListItem key={skill.id} onClick={this.handleClick.bind(this, skill)} primaryText={skill.name}
-                       leftIcon={<ContentInbox />}>
+                       leftIcon={<ContentInbox />} style={itemStyle}>
       </ListItem>;
     });
     return <section>
@@ -110,6 +116,9 @@ export class ProfileComponent extends BaseComponent {
 
     let content;
 
+    let hideResults = this.props.suggestionsEnabled ? 'hideWithOpacity' : '';
+    console.log('hide', hideResults);
+
     if (this.request.user) {
       content = <div>
         <PaperComponent>
@@ -120,7 +129,10 @@ export class ProfileComponent extends BaseComponent {
                                 excludeTheirSkills={true}/>
         </PaperComponent>
         <hr/>
-        <ProfileTabs delegate={this.props.delegate} suggestions={this.props.userSkillSuggestions}/>
+        <div className={hideResults}>
+          <ProfileTabs delegate={this.props.delegate}
+                       suggestions={this.props.userSkillSuggestions}/>
+        </div>
       </div>;
     } else {
       content = <LoginComponent />;
