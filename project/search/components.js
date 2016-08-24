@@ -40,7 +40,6 @@ export class SearchComponent extends BaseComponent {
         <img src="/static/core/media/images/searchIcon.png"/>
       </div>
       <PaperComponent>
-        <h4>Search</h4>
         <SearchSkillInputView delegate={ this.delegate }
                               handleSelect={ this.handleSelect.bind(this) }
                               placeholder={ 'Search some skilled people' }/>

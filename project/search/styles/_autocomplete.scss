@@ -5,6 +5,14 @@
 //  line-height: 52px;
 //}
 
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #FFF;
+}
+
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #FFF;
+}
+
 .search-input-box {
   margin: 20px;
 }
@@ -16,25 +24,28 @@
 .react-autosuggest__input {
   width: 100%;
   height: 40px;
-  padding: 10px 0px;
+  padding: 0px 0px;
   font-family: Helvetica, sans-serif;
   font-weight: 300;
-  font-size: 20px;
+  font-size: 25px;
   color: #FFF;
-  border-radius: 4px;
   background-color: transparent;
+  border-color: transparent;
 }
 
-.react-autosuggest__input::-moz-placeholder{
+.react-autosuggest__input::-moz-placeholder {
   padding-left: 20px;
 }
-.react-autosuggest__input:-moz-placeholder{
+
+.react-autosuggest__input:-moz-placeholder {
   padding-left: 20px;
 }
-.react-autosuggest__input::-webkit-input-placeholder{
+
+.react-autosuggest__input::-webkit-input-placeholder {
   padding-left: 20px;
 }
-.react-autosuggest__input:-ms-input-placeholder{
+
+.react-autosuggest__input:-ms-input-placeholder {
   padding-left: 20px;
 }
 

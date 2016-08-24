@@ -117,12 +117,10 @@ export class ProfileComponent extends BaseComponent {
     let content;
 
     let hideResults = this.props.suggestionsEnabled ? 'hideWithOpacity' : '';
-    console.log('hide', hideResults);
 
     if (this.request.user) {
       content = <div>
         <PaperComponent>
-          <h4>Search skill for your profile</h4>
           <SearchSkillInputView delegate={ this.delegate }
                                 handleSelect={ this.handleSelect.bind(this)}
                                 placeholder={'Search some skill for your profile'}
